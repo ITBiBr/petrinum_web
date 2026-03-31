@@ -11,8 +11,12 @@ final class MainController extends AbstractController
     #[Route('/main', name: 'app_main')]
     public function index(): Response
     {
+        $obsah = [];
+        for ($i = 0; $i < 100; $i++) {
+            $obsah[$i] = random_int(1, 100);
+        }
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
+            'obsah' => $obsah,
         ]);
     }
 }
