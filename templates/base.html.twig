@@ -12,39 +12,48 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+<div class="hero-image">
+    <img src="{{ asset('images/budova.jpg') }}" class="budova">
+</div>
 {# ====================== HLAVIČKA ====================== #}
-<header class="sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm custom-navbar">
-        <div class="container">
+<header class="sticky-top custom-navbar">
+    <div class="navbar-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container align-items-end">
 
             <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
-                <span class="brand-icon me-2">🏫</span>
-                Petrinum
+
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="navbar-logo me-2 mb-3 mt-3">
+
+                <div class="d-flex flex-column lh-sm ms-3 mb-3">
+                    <span class="text-lowercase fs-5">Církevní domov mládeže</span>
+                    <span class="text-lowercase fw-bold fs-1">Petrinum</span>
+                </div>
+
             </a>
 
-            <button class="navbar-toggler custom-toggler collapsed" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Menu">
+            <button class="navbar-toggler custom-toggler collapsed ms-auto mb-lg-0 mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                 <span class="toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <div class="collapse navbar-collapse align-items-end" id="mainNavbar">
+                <ul class="navbar-nav ms-auto align-items-end">
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-fancy" href="#">Domů</a>
+                        <a class="nav-link nav-link-fancy fs-5 fw-bold text-white" href="#">Domů</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-fancy" href="#">O koleji</a>
+                        <a class="nav-link nav-link-fancy fs-5 fw-bold text-white" href="#">O koleji</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-fancy" href="#">Ubytování</a>
+                        <a class="nav-link nav-link-fancy fs-5 fw-bold text-white " href="#">Ubytování</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-fancy" href="#">Kontakty</a>
+                        <a class="nav-link nav-link-fancy fs-5 fw-bold text-white" href="#">Kontakty</a>
                     </li>
 
                 </ul>
@@ -52,6 +61,7 @@
 
         </div>
     </nav>
+    </div>
 </header>
 
 {# ====================== OBSAH ====================== #}
@@ -62,11 +72,15 @@
 </main>
 
 {# ====================== PATIČKA ====================== #}
-<footer class="bg-light border-top py-3 mt-auto">
-    <div class="container text-center text-muted small">
-        © {{ "now"|date("Y") }} Studijní kolej — Všechna práva vyhrazena
+
+<footer class="py-3 mt-auto">
+    <div class="footer-wrapper">
+        <div class="container text-center text-muted small">
+            © {{ "now"|date("Y") }} Petrinum
+        </div>
     </div>
 </footer>
+
 
 {# Webpack Encore JS #}
 {{ encore_entry_script_tags('app') }}
