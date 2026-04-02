@@ -23,18 +23,17 @@ body {
     );
 }
 .footer-wrapper {
-    padding-top: 118px;
+    padding-top: 120px;
     position: relative;
-    bottom: 0px;
-    padding-bottom: 18px;
+    top: 0px;
 
     background: linear-gradient(342deg, #04486f, #84b6d1);
 
 
     mask-image: linear-gradient(
-            to top,
-            black 0px,
-            transparent 120px
+            to bottom,
+            transparent 0px,
+            black 180px
     );
 }
 

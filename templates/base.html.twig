@@ -72,15 +72,16 @@
 </main>
 
 {# ====================== PATIČKA ====================== #}
-
-<footer class="py-3 mt-auto">
-    <div class="footer-wrapper">
-        <div class="container text-center text-muted small">
+<div class="footer-wrapper">
+    <footer class="py-3 mt-auto">
+        <div class="container text-center text-white small pt-5">
             © {{ "now"|date("Y") }} Petrinum
         </div>
-    </div>
-</footer>
-
+        <div class="container text-center text-white small mb-5">
+            Další text patičky
+        </div>
+    </footer>
+</div>
 
 {# Webpack Encore JS #}
 {{ encore_entry_script_tags('app') }}
