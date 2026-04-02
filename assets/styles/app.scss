@@ -12,6 +12,7 @@ body {
     padding-top: 120px;
     position: relative;
     top: -120px;
+    padding-bottom: 8px;
 
     background: linear-gradient(342deg, #04486f, #84b6d1);
 
@@ -19,7 +20,9 @@ body {
     mask-image: linear-gradient(
             to bottom,
             transparent 0px,
-            black 120px
+            black 120px,
+            black calc(100% - 8px),
+            transparent 100%
     );
 }
 .footer-wrapper {
