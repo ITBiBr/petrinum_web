@@ -1,5 +1,8 @@
 import Dropzone from "dropzone";
+import Sortable from "sortablejs";
+
 import "dropzone/dist/dropzone.css";
+import './styles/admin.scss';
 
 // vypne auto-init (DŮLEŽITÉ)
 Dropzone.autoDiscover = false;
@@ -39,6 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        dz.on("addedfile", (file) => {
+            file.previewElement.dropzoneFile = file;
+        });
+
+
         //  NAČTENÍ EXISTUJÍCÍCH SOUBORŮ
         const galerieId = el.dataset.galerieId;
 
@@ -61,6 +69,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 });
         }
+
+        new Sortable(el, {
+            draggable: ".dz-preview", // 🔥 důležité
+            animation: 150,
+
+            onEnd: () => {
+                // 🔥 tady získáš nové pořadí
+                const order = [];
+
+                el.querySelectorAll(".dz-preview").forEach((preview, index) => {
+                    const file = preview.dropzoneFile;
+
+                    if (file && file.serverId) {
+                        order.push({
+                            id: file.serverId,
+                            position: index
+                        });
+                    }
+                });
+
+                console.log(order);
+
+                // 👉 pošli na backend
+                fetch('/admin/foto/reorder', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(order)
+                });
+            }
+        });
     });
 });
 

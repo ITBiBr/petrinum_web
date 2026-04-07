@@ -64,6 +64,7 @@ class GalerieUploadController extends AbstractController
         $foto->setSoubor('uploads/images/' . $filename);
         $foto->setNazev($file->getClientOriginalName());
         $foto->setGalerie($galerie);
+        $foto->setPosition(0);
 
         $em->persist($foto);
         $em->flush();
@@ -72,7 +73,7 @@ class GalerieUploadController extends AbstractController
             'id' => $foto->getId(),
             'name' => $filename,
             'url' => '/uploads/images/' . $filename,
-            'thumbUrl' => '/uploads/images/thumbs/' . $filename, // 🔥
+            'thumbUrl' => '/uploads/images/thumbs/' . $filename,
         ]);
     }
 
@@ -115,6 +116,7 @@ class GalerieUploadController extends AbstractController
                 'name' => $foto->getNazev(),
                 'url' => '/' . $foto->getSoubor(),
                 'thumbUrl' => '/uploads/images/thumbs/' . basename($foto->getSoubor()),
+                'size' => filesize($this->getParameter('kernel.project_dir') . '/public/' . $foto->getSoubor()),
             ];
 
         }
@@ -122,5 +124,21 @@ class GalerieUploadController extends AbstractController
         return $this->json($data);
     }
 
+    #[Route('/admin/foto/reorder', name: 'admin_foto_reorder', methods: ['POST'])]
+    public function reorder(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        foreach ($data as $item) {
+            $foto = $em->getRepository(Foto::class)->find($item['id']);
+            if ($foto) {
+                $foto->setPosition($item['position']);
+            }
+        }
+
+        $em->flush();
+
+        return $this->json(['success' => true]);
+    }
 
 }

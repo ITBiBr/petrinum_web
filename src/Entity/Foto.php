@@ -22,6 +22,9 @@ class Foto
     #[ORM\ManyToOne(inversedBy: 'fotos')]
     private ?Galerie $Galerie = null;
 
+    #[ORM\Column()]
+    private ?int $position = null;
+
 
     public function getId(): ?int
     {
@@ -60,6 +63,18 @@ class Foto
     public function setGalerie(?Galerie $Galerie): static
     {
         $this->Galerie = $Galerie;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): static
+    {
+        $this->position = $position;
 
         return $this;
     }

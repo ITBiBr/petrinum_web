@@ -22,6 +22,7 @@ class Galerie
      * @var Collection<int, Foto>
      */
     #[ORM\OneToMany(targetEntity: Foto::class, mappedBy: 'Galerie', cascade: ['remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $fotos;
 
 
