@@ -22,8 +22,6 @@ class Foto
     #[ORM\ManyToOne(inversedBy: 'fotos')]
     private ?Galerie $Galerie = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $thumbUrl = null;
 
     public function getId(): ?int
     {
@@ -66,15 +64,6 @@ class Foto
         return $this;
     }
 
-    public function getThumbUrl(): ?string
-    {
-        return $this->thumbUrl;
-    }
 
-    public function setThumbUrl(string $thumbUrl): static
-    {
-        $this->thumbUrl = $thumbUrl;
 
-        return $this;
-    }
 }

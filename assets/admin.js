@@ -23,7 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         dz.on("success", (file, response) => {
             file.serverId = response.id;
+
+            // 🔥 použij thumbnail z backendu
+            dz.emit("thumbnail", file, response.thumbUrl);
         });
+
 
         dz.on("removedfile", (file) => {
             if (file.serverId) {
@@ -47,12 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         };
 
                         dz.emit("addedfile", mockFile);
-                        dz.emit("thumbnail", mockFile, file.url);
+                        dz.emit("thumbnail", mockFile, file.thumbUrl); // 🔥
                         dz.emit("complete", mockFile);
 
-                        // 🔥 KLÍČOVÉ pro mazání
                         mockFile.serverId = file.id;
                     });
+
                 });
         }
     });

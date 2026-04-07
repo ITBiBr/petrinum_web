@@ -52,7 +52,10 @@ class GalerieUploadController extends AbstractController
         $manager = new ImageManager(new Driver());
 
         $image = $manager->read($baseDir . '/' . $filename)
-            ->cover(300, 300); //
+            ->scaleDown(200, 200);
+
+
+
 
         $image->save($thumbDir . '/' . $filename);
 
@@ -78,10 +81,20 @@ class GalerieUploadController extends AbstractController
     #[Route('/admin/delete-foto/{id}', name: 'admin_delete_foto', methods: ['DELETE'])]
     public function delete(Foto $foto, EntityManagerInterface $em): JsonResponse
     {
-        $filePath = $this->getParameter('kernel.project_dir') . '/public/' . $foto->getSoubor();
+        $baseDir = $this->getParameter('kernel.project_dir') . '/public/';
+
+        // originál
+        $filePath = $baseDir . $foto->getSoubor();
 
         if (file_exists($filePath)) {
             unlink($filePath);
+        }
+
+        // 🔥 thumbnail
+        $thumbPath = $baseDir . 'uploads/images/thumbs/' . basename($foto->getSoubor());
+
+        if (file_exists($thumbPath)) {
+            unlink($thumbPath);
         }
 
         $em->remove($foto);
@@ -89,6 +102,7 @@ class GalerieUploadController extends AbstractController
 
         return $this->json(['success' => true]);
     }
+
 
     #[Route('/admin/galerie/{id}/fotos', name: 'admin_galerie_fotos', methods: ['GET'])]
     public function list(Galerie $galerie): JsonResponse
@@ -99,9 +113,10 @@ class GalerieUploadController extends AbstractController
             $data[] = [
                 'id' => $foto->getId(),
                 'name' => $foto->getNazev(),
-                'url' => '/'.$foto->getSoubor(),
-                'size' => 12345, // klidně fake, Dropzone to neřeší
+                'url' => '/' . $foto->getSoubor(),
+                'thumbUrl' => '/uploads/images/thumbs/' . basename($foto->getSoubor()),
             ];
+
         }
 
         return $this->json($data);
