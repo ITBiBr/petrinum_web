@@ -6,7 +6,7 @@
     {% if galerie_id %}
         <div
             class="dropzone"
-            data-upload-url="{{ path('admin_upload_foto', { galerieId: galerie_id }) }}"
+            data-upload-url="{{ path('admin_upload_foto', { id: galerie_id }) }}"
             data-galerie-id="{{ galerie_id }}"
         ></div>
 
