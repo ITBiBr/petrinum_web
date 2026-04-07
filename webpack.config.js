@@ -14,6 +14,8 @@ Encore
     // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
 
+    .addEntry('admin', './assets/admin.js')
+
     /*
      * ENTRY CONFIG
      *

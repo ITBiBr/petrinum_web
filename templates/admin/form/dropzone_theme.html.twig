@@ -1,0 +1,20 @@
+{# templates/admin/form/dropzone_theme.html.twig #}
+
+{% block dropzone_widget %}
+    {% set galerie_id = attr['data-galerie-id'] ?? null %}
+
+    {% if galerie_id %}
+        <div
+            class="dropzone"
+            data-upload-url="{{ path('admin_upload_foto', { galerieId: galerie_id }) }}"
+            data-galerie-id="{{ galerie_id }}"
+        ></div>
+
+    {% else %}
+        <div class="alert alert-info">
+            Galerii je potřeba nejprve uložit, pak lze nahrávat obrázky.
+        </div>
+    {% endif %}
+
+
+{% endblock %}
