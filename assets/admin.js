@@ -14,10 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
             addRemoveLinks: true,
             dictRemoveFile: "Odstranit",
             dictDefaultMessage: "Přetáhnout soubory nebo kliknout pro nahrání",
-            createImageThumbnails: true,
-            thumbnailWidth: 200,
-            thumbnailHeight: 200,
-            thumbnailMethod: "contain",
+            dictCancelUpload: "Zrušit upload",
+            dictCancelUploadConfirmation: "Opravdu chcete zrušit upload?",
+            dictUploadCanceled: "Upload zrušen",
+            dictFileTooBig: "Soubor je příliš velký ({{filesize}} MB). Max: {{maxFilesize}} MB.",
+            dictInvalidFileType: "Nepodporovaný typ souboru",
+
         });
 
 
