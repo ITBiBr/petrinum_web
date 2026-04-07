@@ -1,5 +1,7 @@
 <?php
 
+namespace App\EventListener;
+
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use App\Entity\Galerie;
