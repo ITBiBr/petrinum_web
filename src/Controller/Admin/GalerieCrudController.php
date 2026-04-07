@@ -6,6 +6,8 @@ use App\Entity\Galerie;
 use App\Form\Type\DropzoneType;
 use App\Form\Type\MyCustomFieldType;
 use App\Form\Type\UploadType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -26,6 +28,14 @@ class GalerieCrudController extends AbstractCrudController
     {
         return $assets
             ->addWebpackEncoreEntry('admin');
+    }
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER)
+            ->remove(Crud::PAGE_NEW, Action::SAVE_AND_RETURN)
+            ->add(Crud::PAGE_NEW, Action::SAVE_AND_CONTINUE)
+        ;
     }
 
     public function configureCrud(Crud $crud): Crud

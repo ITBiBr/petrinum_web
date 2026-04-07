@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const dz = new Dropzone(el, {
             url: el.dataset.uploadUrl,
+
+            parallelUploads: 1, //  zásadní
+
             paramName: "file",
             addRemoveLinks: true,
             dictRemoveFile: "Odstranit",

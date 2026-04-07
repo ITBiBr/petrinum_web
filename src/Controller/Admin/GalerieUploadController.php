@@ -7,7 +7,7 @@ use App\Entity\Foto;
 use App\Entity\Galerie;
 use App\Repository\GalerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,11 +18,11 @@ class GalerieUploadController extends AbstractController
 {
 
 
-    #[Route('/admin/upload-foto/{galerieId}', name: 'admin_upload_foto', methods: ['POST'])]
+    #[Route('/admin/upload-foto/{id}', name: 'admin_upload_foto', methods: ['POST'])]
     public function upload(
         Request $request,
         EntityManagerInterface $em,
-        GalerieRepository $galerieRepo
+        Galerie $galerie
     ): JsonResponse {
         $file = $request->files->get('file');
 
@@ -30,17 +30,23 @@ class GalerieUploadController extends AbstractController
             return $this->json(['error' => 'No file'], 400);
         }
 
-        $galerie = $galerieRepo->find($request->get('galerieId'));
-
-        if (!$galerie) {
-            return $this->json(['error' => 'Galerie not found'], 404);
-        }
 
         $baseDir = $this->getParameter('kernel.project_dir') . '/public/uploads/images';
         $thumbDir = $baseDir . '/thumbs';
 
+        if (!is_dir($baseDir)) {
+            mkdir($baseDir, 0777, true);
+        }
+
         if (!is_dir($thumbDir)) {
             mkdir($thumbDir, 0777, true);
+        }
+
+        if (!is_writable($baseDir)) {
+            return $this->json([
+                'error' => 'Base dir not writable',
+                'dir' => $baseDir
+            ], 500);
         }
 
         $filename = bin2hex(random_bytes(8)) . '.' . $file->guessExtension();
