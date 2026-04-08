@@ -1,3 +1,15 @@
 .dz-preview * {
     cursor: move !important;
 }
+.dz-optimized-size
+{
+    background-color: rgba(255, 255, 255, .4);
+    padding: 0 .4em;
+    border-radius: 3px;
+    margin-bottom: 14px;
+    margin-top: -14px;
+    color:#06601b;
+}
+.dropzone, {
+    background: white;
+}

@@ -32,9 +32,34 @@ document.addEventListener("DOMContentLoaded", () => {
         dz.on("success", (file, response) => {
             file.serverId = response.id;
 
-            // 🔥 použij thumbnail z backendu
-            dz.emit("thumbnail", file, response.thumbUrl);
+            dz.emit("thumbnail", file, response.thumbUrl + '?t=' + Date.now());
+
+            if (response.size && file.previewElement) {
+                const sizeWrapper = file.previewElement.querySelector(".dz-size");
+
+                if (sizeWrapper) {
+                    const originalSize = file.size;
+                    const optimizedSize = response.size;
+
+                    const percent = Math.round(100 - (optimizedSize / originalSize) * 100);
+
+                    const optimizedText = dz.filesize(optimizedSize);
+
+                    const newSize = document.createElement("div");
+                    newSize.className = "dz-optimized-size";
+
+                    newSize.innerHTML = `
+
+                    -${percent}% ${optimizedText}
+
+            `;
+
+                    // 🔥 vlož pod původní velikost
+                    sizeWrapper.insertAdjacentElement("afterend", newSize);
+                }
+            }
         });
+
 
 
         dz.on("removedfile", (file) => {

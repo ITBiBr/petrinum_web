@@ -2,18 +2,18 @@
 
 namespace App\EventListener;
 
+use App\Entity\Aktuality;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
-use App\Entity\Galerie;
 
 #[AsDoctrineListener(event: 'preRemove')]
-final class GalerieDeleteListener
+final class AktualityDeleteListener
 {
     public function preRemove(PreRemoveEventArgs $event): void
     {
         $entity = $event->getObject();
 
-        if (!$entity instanceof Galerie) {
+        if (!$entity instanceof Aktuality) {
             return;
         }
 

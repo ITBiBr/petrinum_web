@@ -19,11 +19,11 @@ class Foto
     #[ORM\Column(length: 255)]
     private ?string $soubor = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fotos')]
-    private ?Galerie $Galerie = null;
-
     #[ORM\Column()]
     private ?int $position = null;
+
+    #[ORM\ManyToOne(inversedBy: 'fotos')]
+    private ?Aktuality $Aktuality = null;
 
 
     public function getId(): ?int
@@ -55,18 +55,6 @@ class Foto
         return $this;
     }
 
-    public function getGalerie(): ?Galerie
-    {
-        return $this->Galerie;
-    }
-
-    public function setGalerie(?Galerie $Galerie): static
-    {
-        $this->Galerie = $Galerie;
-
-        return $this;
-    }
-
     public function getPosition(): ?int
     {
         return $this->position;
@@ -75,6 +63,18 @@ class Foto
     public function setPosition(int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getAktuality(): ?Aktuality
+    {
+        return $this->Aktuality;
+    }
+
+    public function setAktuality(?Aktuality $Aktuality): static
+    {
+        $this->Aktuality = $Aktuality;
 
         return $this;
     }

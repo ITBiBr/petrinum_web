@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Galerie;
+use App\Entity\Aktuality;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Galerie>
+ * @extends ServiceEntityRepository<Aktuality>
  */
-class GalerieRepository extends ServiceEntityRepository
+class AktualityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Galerie::class);
+        parent::__construct($registry, Aktuality::class);
     }
 
     //    /**
-    //     * @return Galerie[] Returns an array of Galerie objects
+    //     * @return Aktuality[] Returns an array of Aktuality objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
+    //            ->orderBy('a.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Galerie
+    //    public function findOneBySomeField($value): ?Aktuality
     //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

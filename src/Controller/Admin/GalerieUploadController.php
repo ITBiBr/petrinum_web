@@ -3,9 +3,9 @@
 namespace App\Controller\Admin;
 
 
+use App\Entity\Aktuality;
 use App\Entity\Foto;
 use App\Entity\Galerie;
-use App\Repository\GalerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
@@ -22,7 +22,7 @@ class GalerieUploadController extends AbstractController
     public function upload(
         Request $request,
         EntityManagerInterface $em,
-        Galerie $galerie
+        Aktuality $aktuality
     ): JsonResponse {
         $file = $request->files->get('file');
 
@@ -53,15 +53,17 @@ class GalerieUploadController extends AbstractController
 
         // uložit originál
         $file->move($baseDir, $filename);
+        $finalPath = $baseDir . '/' . $filename;
 
-        // 🔥 vytvořit thumbnail
+        // zmenšit originál a vytvořit thumbnail
         $manager = new ImageManager(new Driver());
+
+        $image = $manager->read($finalPath)
+            ->scaleDown(2000, 2000);
+        $image->save($baseDir . '/' . $filename);
 
         $image = $manager->read($baseDir . '/' . $filename)
             ->scaleDown(200, 200);
-
-
-
 
         $image->save($thumbDir . '/' . $filename);
 
@@ -69,7 +71,7 @@ class GalerieUploadController extends AbstractController
         $foto = new Foto();
         $foto->setSoubor('uploads/images/' . $filename);
         $foto->setNazev($file->getClientOriginalName());
-        $foto->setGalerie($galerie);
+        $foto->setAktuality($aktuality);
         $foto->setPosition(0);
 
         $em->persist($foto);
@@ -80,6 +82,7 @@ class GalerieUploadController extends AbstractController
             'name' => $filename,
             'url' => '/uploads/images/' . $filename,
             'thumbUrl' => '/uploads/images/thumbs/' . $filename,
+            'size' => filesize($finalPath), //
         ]);
     }
 
@@ -112,11 +115,11 @@ class GalerieUploadController extends AbstractController
 
 
     #[Route('/admin/galerie/{id}/fotos', name: 'admin_galerie_fotos', methods: ['GET'])]
-    public function list(Galerie $galerie): JsonResponse
+    public function list(Aktuality $aktuality): JsonResponse
     {
         $data = [];
 
-        foreach ($galerie->getFotos() as $foto) {
+        foreach ($aktuality->getFotos() as $foto) {
             $data[] = [
                 'id' => $foto->getId(),
                 'name' => $foto->getNazev(),

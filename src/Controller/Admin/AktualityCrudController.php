@@ -2,26 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Galerie;
+use App\Entity\Aktuality;
 use App\Form\Type\DropzoneType;
-use App\Form\Type\MyCustomFieldType;
-use App\Form\Type\UploadType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class GalerieCrudController extends AbstractCrudController
+class AktualityCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Galerie::class;
+        return Aktuality::class;
     }
 
     public function configureAssets(Assets $assets): Assets
@@ -35,7 +30,7 @@ class GalerieCrudController extends AbstractCrudController
             ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER)
             ->remove(Crud::PAGE_NEW, Action::SAVE_AND_RETURN)
             ->add(Crud::PAGE_NEW, Action::SAVE_AND_CONTINUE)
-        ;
+            ;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -48,7 +43,7 @@ class GalerieCrudController extends AbstractCrudController
     {
         return [
 
-            TextField::new('nazev', 'Title'),
+            TextField::new('titulek', 'Title'),
             Field::new('upload')
                 ->setFormType(DropzoneType::class)
                 ->setFormTypeOptions([
