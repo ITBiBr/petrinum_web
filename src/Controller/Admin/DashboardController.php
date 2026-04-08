@@ -43,6 +43,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('Web', 'fa fa-globe', $this->generateUrl('app_main'));
         yield MenuItem::linkToDashboard('Home', 'fa fa-home');
         yield MenuItem::linkTo(UserCrudController::class, 'Users', 'fa fa-user')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkTo(GalerieCrudController::class, 'Gallery', 'fa fa-photo')->setPermission('ROLE_ADMIN');
         // odkaz na změnu hesla aktuálního uživatele
         $currentUserId = $this->getUser()?->getId();
 
