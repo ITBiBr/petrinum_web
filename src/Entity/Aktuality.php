@@ -35,6 +35,9 @@ class Aktuality
     #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $fotos;
 
+    #[ORM\Column(length: 255)]
+    private ?string $url = null;
+
     public function __construct()
     {
         $this->fotos = new ArrayCollection();
@@ -120,6 +123,18 @@ class Aktuality
                 $foto->setAktuality(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): static
+    {
+        $this->url = $url;
 
         return $this;
     }
