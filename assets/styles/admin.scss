@@ -1,4 +1,4 @@
-.dz-preview * {
+.dz-preview *:not(.dz-remove) {
     cursor: move !important;
 }
 .dz-optimized-size

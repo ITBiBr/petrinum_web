@@ -72,7 +72,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
         dz.on("addedfile", (file) => {
             file.previewElement.dropzoneFile = file;
+
+            const nameEl = file.previewElement.querySelector("[data-dz-name]");
+
+            if (nameEl) {
+                const currentName = nameEl.innerText;
+
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = currentName;
+                input.className = "dz-filename-input form-control form-control-sm";
+
+                nameEl.replaceWith(input);
+
+                // 🔥 save při změně
+                input.addEventListener("change", () => {
+                    if (!file.serverId) return;
+
+                    fetch(`/admin/foto/rename/${file.serverId}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            nazev: input.value
+                        })
+                    });
+                });
+            }
         });
+
 
 
         //  NAČTENÍ EXISTUJÍCÍCH SOUBORŮ

@@ -150,4 +150,23 @@ class GalerieUploadController extends AbstractController
         return $this->json(['success' => true]);
     }
 
+    #[Route('/admin/foto/rename/{id}', name: 'admin_foto_rename', methods: ['POST'])]
+    public function rename(
+        Foto $foto,
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['nazev'])) {
+            return $this->json(['error' => 'Missing name'], 400);
+        }
+
+        $foto->setNazev($data['nazev']);
+        $em->flush();
+
+        return $this->json(['success' => true]);
+    }
+
+
 }
