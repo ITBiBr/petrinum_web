@@ -80,9 +80,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const input = document.createElement("input");
                 input.type = "text";
-                input.maxlength = "255";
+                input.maxLength = 255;
                 input.value = currentName;
                 input.className = "dz-filename-input form-control form-control-sm";
+                input.name = "fileName[]"
 
                 nameEl.replaceWith(input);
 
