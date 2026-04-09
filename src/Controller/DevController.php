@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Akce;
 use App\Repository\AkceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,5 +50,34 @@ class DevController
         $em->flush();
 
         return new Response('Hotovo 👍');
+    }
+
+    #[Route('/dev/generate-perex', name: 'dev_generate_perex')]
+    public function generatePerex(EntityManagerInterface $em)
+    {
+        $repo = $em->getRepository(Akce::class);
+        $items = $repo->findAll();
+
+        foreach ($items as $item) {
+            $obsah = $item->getObsah();
+
+            if ($obsah) {
+                // odstranění HTML tagů (doporučeno)
+                $text = strip_tags($obsah);
+
+                // zkrácení na 50 znaků (UTF-8 safe)
+                if (mb_strlen($text) > 50) {
+                    $perex = mb_substr($text, 0, 50) . '...';
+                } else {
+                    $perex = $text;
+                }
+
+                $item->setPerex($perex);
+            }
+        }
+
+        $em->flush();
+
+        return new Response('Hotovo!');
     }
 }
