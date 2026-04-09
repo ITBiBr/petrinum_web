@@ -28,4 +28,4 @@ services:
                 # produkt: App\Entity\Produkt
             $mapFotoSetter:
                 aktuality: 'setAktuality'
-                produkt: 'setProdukt'
+                # produkt: 'setProdukt'

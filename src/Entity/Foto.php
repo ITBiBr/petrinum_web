@@ -23,7 +23,7 @@ class Foto
     private ?int $position = null;
 
     #[ORM\ManyToOne(inversedBy: 'fotos')]
-    private ?Aktuality $Aktuality = null;
+    private ?Akce $Akce = null;
 
 
     public function getId(): ?int
@@ -67,14 +67,14 @@ class Foto
         return $this;
     }
 
-    public function getAktuality(): ?Aktuality
+    public function getAkce(): ?Akce
     {
-        return $this->Aktuality;
+        return $this->Akce;
     }
 
-    public function setAktuality(?Aktuality $Aktuality): static
+    public function setAkce(?Akce $Akce): static
     {
-        $this->Aktuality = $Aktuality;
+        $this->Akce = $Akce;
 
         return $this;
     }

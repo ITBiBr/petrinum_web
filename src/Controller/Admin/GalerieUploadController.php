@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 
-use App\Entity\Aktuality;
+use App\Entity\Akce;
 use App\Entity\Foto;
 use App\Entity\FotoInterface;
 use Doctrine\ORM\EntityManagerInterface;

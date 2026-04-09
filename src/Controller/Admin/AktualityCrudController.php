@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Aktuality;
+use App\Entity\Akce;
 use App\Form\Type\DropzoneType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -17,7 +17,7 @@ class AktualityCrudController extends AbstractCrudController
     use UrlTrait;
     public static function getEntityFqcn(): string
     {
-        return Aktuality::class;
+        return Akce::class;
     }
 
     public function configureAssets(Assets $assets): Assets

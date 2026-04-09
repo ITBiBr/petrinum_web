@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\AktualityRepository;
+use App\Repository\AkceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AktualityRepository::class)]
-class Aktuality implements FotoInterface
+#[ORM\Entity(repositoryClass: AkceRepository::class)]
+class Akce implements FotoInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,7 +31,7 @@ class Aktuality implements FotoInterface
     /**
      * @var Collection<int, Foto>
      */
-    #[ORM\OneToMany(targetEntity: Foto::class, mappedBy: 'Aktuality', cascade: ['remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Foto::class, mappedBy: 'Akce', cascade: ['remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $fotos;
 

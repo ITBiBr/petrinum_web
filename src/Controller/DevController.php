@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\AktualityRepository;
+use App\Repository\AkceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +12,7 @@ class DevController
 {
     #[Route('/dev/generate-slugs', name: 'dev_generate_slugs')]
     public function generateSlugs(
-        AktualityRepository $repo,
+        AkceRepository         $repo,
         EntityManagerInterface $em
     ): Response {
         $slugger = new AsciiSlugger();
