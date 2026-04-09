@@ -43,7 +43,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('Web', 'fa fa-globe', $this->generateUrl('app_main'));
         yield MenuItem::linkToDashboard('Home', 'fa fa-home');
         yield MenuItem::linkTo(UserCrudController::class, 'Users', 'fa fa-user')->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkTo(AkceCrudController::class, 'News', 'fa fa-news')->setPermission('ROLE_ADMIN');
+
         // odkaz na změnu hesla aktuálního uživatele
         $currentUserId = $this->getUser()?->getId();
 
@@ -56,5 +56,6 @@ class DashboardController extends AbstractDashboardController
 
             yield MenuItem::linkToUrl('Password change', 'fa fa-key', $url)->setPermission('ROLE_EDITOR');
         }
+        yield MenuItem::linkTo(AkceCrudController::class, 'Events', 'fa fa-calendar')->setPermission('ROLE_EDITOR');
     }
 }
