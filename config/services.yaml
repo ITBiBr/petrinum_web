@@ -24,8 +24,8 @@ services:
     App\Controller\Admin\GalerieUploadController:
         arguments:
             $mapEntity:
-                aktuality: App\Entity\Aktuality
+                akce: App\Entity\Akce
                 # produkt: App\Entity\Produkt
             $mapFotoSetter:
-                aktuality: 'setAktuality'
+                akce: 'setAktuality'
                 # produkt: 'setProdukt'
