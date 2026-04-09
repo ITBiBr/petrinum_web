@@ -19,14 +19,31 @@ class DevController
 
         $items = $repo->findAll();
 
+        // vezmeme existující URL z DB
+        $existingUrls = [];
         foreach ($items as $item) {
             if ($item->getUrl()) {
-                continue; // přeskočí už vyplněné (volitelné)
+                $existingUrls[] = $item->getUrl();
+            }
+        }
+
+        foreach ($items as $item) {
+            if ($item->getUrl()) {
+                continue;
             }
 
-            $slug = $slugger->slug($item->getTitulek())->lower();
+            $originalUrl = (string) $slugger->slug($item->getTitulek())->lower();
+            $url = $originalUrl;
 
-            $item->setUrl($slug);
+            $i = 2;
+
+            while (in_array($url, $existingUrls, true)) {
+                $url = $originalUrl . '-' . $i;
+                $i++;
+            }
+
+            $item->setUrl($url);
+            $existingUrls[] = $url; // 🔥 klíčové
         }
 
         $em->flush();

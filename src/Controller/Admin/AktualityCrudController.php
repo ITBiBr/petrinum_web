@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class AktualityCrudController extends AbstractCrudController
 {
+    use UrlTrait;
     public static function getEntityFqcn(): string
     {
         return Aktuality::class;

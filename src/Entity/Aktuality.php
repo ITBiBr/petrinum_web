@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AktualityRepository::class)]
-class Aktuality
+class Aktuality implements FotoInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

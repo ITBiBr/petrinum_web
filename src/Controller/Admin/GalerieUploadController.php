@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Aktuality;
 use App\Entity\Foto;
-use App\Entity\Galerie;
 use Doctrine\ORM\EntityManagerInterface;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
