@@ -21,3 +21,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Controller\Admin\GalerieUploadController:
+        arguments:
+            $mapEntity:
+                aktuality: App\Entity\Aktuality
+                # produkt: App\Entity\Produkt
+            $mapFotoSetter:
+                aktuality: 'setAktuality'
+                produkt: 'setProdukt'

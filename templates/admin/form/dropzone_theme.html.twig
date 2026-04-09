@@ -1,20 +1,19 @@
 {# templates/admin/form/dropzone_theme.html.twig #}
 
 {% block dropzone_widget %}
-    {% set galerie_id = attr['data-galerie-id'] ?? null %}
+    {% set entity = attr['data-entity'] ?? null %}
+    {% set entity_id = attr['data-entity-id'] ?? null %}
 
-    {% if galerie_id %}
+    {% if entity and entity_id %}
         <div
             class="dropzone"
-            data-upload-url="{{ path('admin_upload_foto', { id: galerie_id }) }}"
-            data-galerie-id="{{ galerie_id }}"
+            data-upload-url="{{ path('admin_upload_foto', { entity: entity, id: entity_id }) }}"
+            data-entity="{{ entity }}"
+            data-entity-id="{{ entity_id }}"
         ></div>
-
     {% else %}
         <div class="alert alert-info">
-            Aktualitu je potřeba nejprve uložit, pak lze nahrávat obrázky do fotogalerie.
+            Nejprve uložte záznam, pak lze nahrávat obrázky.
         </div>
     {% endif %}
-
-
 {% endblock %}

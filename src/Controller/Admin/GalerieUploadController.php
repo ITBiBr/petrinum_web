@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Aktuality;
 use App\Entity\Foto;
+use App\Entity\FotoInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
@@ -15,13 +16,16 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class GalerieUploadController extends AbstractController
 {
+    public function __construct(private readonly array $mapEntity, private readonly array $mapFotoSetter)
+    {
 
-
-    #[Route('/admin/upload-foto/{id}', name: 'admin_upload_foto', methods: ['POST'])]
+    }
+    #[Route('/admin/upload-foto/{entity}/{id}', name: 'admin_upload_foto', methods: ['POST'])]
     public function upload(
+        string $entity,
+        int $id,
         Request $request,
-        EntityManagerInterface $em,
-        Aktuality $aktuality
+        EntityManagerInterface $em
     ): JsonResponse {
         $file = $request->files->get('file');
 
@@ -29,7 +33,21 @@ class GalerieUploadController extends AbstractController
             return $this->json(['error' => 'No file'], 400);
         }
 
+        $class = $this->mapEntity[$entity] ?? null;
+        $setter = $this->mapFotoSetter[$entity] ?? null;
 
+        if (!$class || !$setter) {
+            return $this->json(['error' => 'Unknown entity'], 400);
+        }
+
+        $object = $em->getRepository($class)->find($id);
+
+
+        if (!$object) {
+            return $this->json(['error' => 'Entity not found'], 404);
+        }
+
+        // ===== FILE SYSTEM =====
         $baseDir = $this->getParameter('kernel.project_dir') . '/public/uploads/images';
         $thumbDir = $baseDir . '/thumbs';
 
@@ -41,37 +59,30 @@ class GalerieUploadController extends AbstractController
             mkdir($thumbDir, 0777, true);
         }
 
-        if (!is_writable($baseDir)) {
-            return $this->json([
-                'error' => 'Base dir not writable',
-                'dir' => $baseDir
-            ], 500);
-        }
-
         $filename = bin2hex(random_bytes(8)) . '.' . $file->guessExtension();
 
-        // uložit originál
         $file->move($baseDir, $filename);
         $finalPath = $baseDir . '/' . $filename;
 
         // zmenšit originál a vytvořit thumbnail
         $manager = new ImageManager(new Driver());
 
-        $image = $manager->read($finalPath)
-            ->scaleDown(2000, 2000);
-        $image->save($baseDir . '/' . $filename);
+        $manager->read($finalPath)
+            ->scaleDown(2000, 2000)
+            ->save($finalPath);
 
-        $image = $manager->read($baseDir . '/' . $filename)
-            ->scaleDown(200, 200);
-
-        $image->save($thumbDir . '/' . $filename);
+        $manager->read($finalPath)
+            ->scaleDown(200, 200)
+            ->save($thumbDir . '/' . $filename);
 
         // uložit do DB
         $foto = new Foto();
         $foto->setSoubor('uploads/images/' . $filename);
         $foto->setNazev($file->getClientOriginalName());
-        $foto->setAktuality($aktuality);
         $foto->setPosition(0);
+
+        // dynamické přiřazení
+        $foto->{$setter}($object);
 
         $em->persist($foto);
         $em->flush();
@@ -81,7 +92,7 @@ class GalerieUploadController extends AbstractController
             'name' => $filename,
             'url' => '/uploads/images/' . $filename,
             'thumbUrl' => '/uploads/images/thumbs/' . $filename,
-            'size' => filesize($finalPath), //
+            'size' => filesize($finalPath),
         ]);
     }
 
@@ -113,20 +124,45 @@ class GalerieUploadController extends AbstractController
     }
 
 
-    #[Route('/admin/galerie/{id}/fotos', name: 'admin_galerie_fotos', methods: ['GET'])]
-    public function list(Aktuality $aktuality): JsonResponse
-    {
+    #[Route('/admin/{entity}/{id}/foto', name: 'admin_foto_list', methods: ['GET'])]
+    public function list(
+        string $entity,
+        int $id,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+
+        if (!isset($this->mapEntity[$entity])) {
+            return $this->json(['error' => 'Unknown entity'], 400);
+        }
+
+        $object = $em->getRepository($this->mapEntity[$entity])->find($id);
+
+        if (!$object) {
+            return $this->json([]);
+        }
+
+        if (!$object instanceof FotoInterface) {
+            return $this->json(['error' => 'Entita nepodporuje fotky'], 400);
+        }
+
+        $fotos = $object->getFotos();
+
+        $projectDir = $this->getParameter('kernel.project_dir');
+
         $data = [];
 
-        foreach ($aktuality->getFotos() as $foto) {
+        foreach ($fotos as $foto) {
+            $path = $foto->getSoubor();
+            $fullPath = $projectDir . '/public/' . $path;
+
             $data[] = [
                 'id' => $foto->getId(),
                 'name' => $foto->getNazev(),
-                'url' => '/' . $foto->getSoubor(),
-                'thumbUrl' => '/uploads/images/thumbs/' . basename($foto->getSoubor()),
-                'size' => filesize($this->getParameter('kernel.project_dir') . '/public/' . $foto->getSoubor()),
+                'url' => '/' . $path,
+                'thumbUrl' => '/uploads/images/thumbs/' . basename($path),
+                'size' => file_exists($fullPath) ? filesize($fullPath) : 0,
             ];
-
         }
 
         return $this->json($data);

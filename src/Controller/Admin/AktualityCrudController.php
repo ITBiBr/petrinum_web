@@ -51,7 +51,8 @@ class AktualityCrudController extends AbstractCrudController
                     'mapped' => false,
                     'required' => false,
                     'attr' => [
-                        'data-galerie-id' => $this->getContext()?->getEntity()?->getInstance()?->getId(),
+                        'data-entity' => 'aktuality',
+                        'data-entity-id' => $this->getContext()?->getEntity()?->getInstance()?->getId(),
                     ],
                 ])
                 ->onlyOnForms()

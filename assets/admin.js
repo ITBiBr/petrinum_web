@@ -107,10 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         //  NAČTENÍ EXISTUJÍCÍCH SOUBORŮ
-        const galerieId = el.dataset.galerieId;
+        const entity = el.dataset.entity;
+        const entityId = el.dataset.entityId;
 
-        if (galerieId) {
-            fetch(`/admin/galerie/${galerieId}/fotos`)
+        if (entity && entityId) {
+            fetch(`/admin/${entity}/${entityId}/foto`)
                 .then(res => res.json())
                 .then(files => {
                     files.forEach(file => {
@@ -120,12 +121,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         };
 
                         dz.emit("addedfile", mockFile);
-                        dz.emit("thumbnail", mockFile, file.thumbUrl); // 🔥
+                        dz.emit("thumbnail", mockFile, file.thumbUrl);
                         dz.emit("complete", mockFile);
 
                         mockFile.serverId = file.id;
                     });
-
                 });
         }
 
