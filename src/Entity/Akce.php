@@ -16,17 +16,21 @@ class Akce implements FotoInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $Perex = null;
     #[ORM\Column(length: 255)]
     private ?string $titulek = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Video = null;
     #[ORM\Column]
     private ?\DateTime $datumVlozeni = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $text1 = null;
+    private ?string $obsah = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $text2 = null;
+    private ?string $obsahPokracovani= null;
 
     /**
      * @var Collection<int, Foto>
@@ -47,6 +51,18 @@ class Akce implements FotoInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getPerex(): ?string
+    {
+        return $this->Perex;
+    }
+
+    public function setPerex(?string $Perex): static
+    {
+        $this->Perex = $Perex;
+
+        return $this;
     }
 
     public function getTitulek(): ?string
@@ -73,26 +89,26 @@ class Akce implements FotoInterface
         return $this;
     }
 
-    public function getText1(): ?string
+    public function getObsah(): ?string
     {
-        return $this->text1;
+        return $this->obsah;
     }
 
-    public function setText1(?string $text1): static
+    public function setObsah(?string $obsah): static
     {
-        $this->text1 = $text1;
+        $this->obsah = $obsah;
 
         return $this;
     }
 
-    public function getText2(): ?string
+    public function getObsahPokracovani(): ?string
     {
-        return $this->text2;
+        return $this->obsahPokracovani;
     }
 
-    public function setText2(?string $text2): static
+    public function setObsahPokracovani(?string $obsahPokracovani): static
     {
-        $this->text2 = $text2;
+        $this->obsahPokracovani = $obsahPokracovani;
 
         return $this;
     }
@@ -135,6 +151,18 @@ class Akce implements FotoInterface
     public function setUrl(string $url): static
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->Video;
+    }
+
+    public function setVideo(?string $Video): static
+    {
+        $this->Video = $Video;
 
         return $this;
     }
