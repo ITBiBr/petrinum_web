@@ -44,6 +44,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Home', 'fa fa-home');
         yield MenuItem::linkTo(UserCrudController::class, 'Users', 'fa fa-user')->setPermission('ROLE_ADMIN');
 
+
         // odkaz na změnu hesla aktuálního uživatele
         $currentUserId = $this->getUser()?->getId();
 
@@ -56,6 +57,7 @@ class DashboardController extends AbstractDashboardController
 
             yield MenuItem::linkToUrl('Password change', 'fa fa-key', $url)->setPermission('ROLE_EDITOR');
         }
+        yield MenuItem::linkTo(ClankyCrudController::class, 'Articles', 'fa fa-newspaper')->setPermission('ROLE_EDITOR');
         yield MenuItem::linkTo(AkceCrudController::class, 'Events', 'fa fa-calendar')->setPermission('ROLE_EDITOR');
     }
 }

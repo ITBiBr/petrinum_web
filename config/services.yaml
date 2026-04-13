@@ -25,7 +25,7 @@ services:
         arguments:
             $mapEntity:
                 akce: App\Entity\Akce
-                # produkt: App\Entity\Produkt
+                clanky: App\Entity\Clanky
             $mapFotoSetter:
                 akce: 'setAktuality'
-                # produkt: 'setProdukt'
+                clanky: 'setClanky'
