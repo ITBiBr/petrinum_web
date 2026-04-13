@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ClankyRepository::class)]
-class Clanky
+class Clanky implements FotoInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
