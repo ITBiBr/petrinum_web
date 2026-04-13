@@ -25,6 +25,9 @@ class Foto
     #[ORM\ManyToOne(inversedBy: 'fotos')]
     private ?Akce $Akce = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fotos')]
+    private ?Clanky $Clanky = null;
+
 
     public function getId(): ?int
     {
@@ -75,6 +78,18 @@ class Foto
     public function setAkce(?Akce $Akce): static
     {
         $this->Akce = $Akce;
+
+        return $this;
+    }
+
+    public function getClanky(): ?Clanky
+    {
+        return $this->Clanky;
+    }
+
+    public function setClanky(?Clanky $Clanky): static
+    {
+        $this->Clanky = $Clanky;
 
         return $this;
     }
