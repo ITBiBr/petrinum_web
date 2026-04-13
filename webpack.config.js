@@ -14,8 +14,7 @@ Encore
     // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
 
-    .addEntry('admin', './assets/admin.js')
-    .addEntry('load-more', './assets/load-more.js')
+
 
     /*
      * ENTRY CONFIG
@@ -24,6 +23,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('admin', './assets/admin.js')
+    .addEntry('load-more_js', './assets/load-more.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

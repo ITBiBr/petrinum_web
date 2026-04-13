@@ -25,7 +25,13 @@ class Akce implements FotoInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Video = null;
     #[ORM\Column]
-    private ?\DateTime $datumVlozeni = null;
+    private ?\DateTime $datum = null;
+
+    #[ORM\Column]
+    private ?\DateTime $datumZobrazeniOd = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $datumDo = null;
 
     #[NotBlank(message: 'Content must not be blank.')]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -86,14 +92,14 @@ class Akce implements FotoInterface
         return $this;
     }
 
-    public function getDatumVlozeni(): ?\DateTime
+    public function getDatum(): ?\DateTime
     {
-        return $this->datumVlozeni;
+        return $this->datum;
     }
 
-    public function setDatumVlozeni(\DateTime $datumVlozeni): static
+    public function setDatum(\DateTime $datum): static
     {
-        $this->datumVlozeni = $datumVlozeni;
+        $this->datum = $datum;
 
         return $this;
     }
@@ -199,6 +205,30 @@ class Akce implements FotoInterface
         if ($this->stitkies->removeElement($stitky)) {
             $stitky->removeAkce($this);
         }
+
+        return $this;
+    }
+
+    public function getDatumZobrazeniOd(): ?\DateTime
+    {
+        return $this->datumZobrazeniOd;
+    }
+
+    public function setDatumZobrazeniOd(\DateTime $datumZobrazeniOd): static
+    {
+        $this->datumZobrazeniOd = $datumZobrazeniOd;
+
+        return $this;
+    }
+
+    public function getDatumDo(): ?\DateTime
+    {
+        return $this->datumDo;
+    }
+
+    public function setDatumDo(?\DateTime $datumDo): static
+    {
+        $this->datumDo = $datumDo;
 
         return $this;
     }

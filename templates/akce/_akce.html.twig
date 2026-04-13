@@ -1,0 +1,30 @@
+<div class="col-12 col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 shadow-sm">
+
+        {% if ak.fotos|length > 0 %}
+            <img src="{{ asset(ak.fotos|first.soubor) |imagine_filter('ak_thumb') }}"
+                 class="card-img-top"
+                 alt="{{ ak.titulek }}">
+        {% endif %}
+
+
+        <div class="card-body d-flex flex-column">
+
+            <h5 class="card-title">{{ ak.titulek }}</h5>
+
+            {% if ak.perex %}
+                <p class="card-text text-muted small">
+                    {{ ak.perex|raw }}
+                </p>
+            {% endif %}
+
+            <div class="mt-auto mb-3">
+                {% for stitek in ak.stitkies %}
+                    <span class="badge bg-primary me-1">{{ stitek }}</span>
+                {% endfor %}
+            </div>
+
+
+        </div>
+    </div>
+</div>

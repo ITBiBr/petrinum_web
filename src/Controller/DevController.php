@@ -60,10 +60,12 @@ class DevController
 
         foreach ($items as $item) {
             $obsah = $item->getObsah();
+            if ($obsah == '')
+                $obsah = $item->getObsahPokracovani();
 
             if ($obsah) {
                 $text = trim(strip_tags($obsah));
-                $limit = 50;
+                $limit = 160;
 
                 if (mb_strlen($text) > $limit) {
                     // vezmeme o trochu víc, ať máme prostor najít celé slovo

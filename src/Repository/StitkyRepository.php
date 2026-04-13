@@ -16,28 +16,12 @@ class StitkyRepository extends ServiceEntityRepository
         parent::__construct($registry, Stitky::class);
     }
 
-    //    /**
-    //     * @return Stitky[] Returns an array of Stitky objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Stitky
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findStitkySAkcemi(): array
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->innerJoin('s.Akce', 'a');
+        $qb->groupBy('s.id')
+            ->orderBy('s.titulek', 'ASC');
+        return $qb->getQuery()->getResult();
+    }
 }

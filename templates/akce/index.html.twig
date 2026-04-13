@@ -1,20 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AktualityController!{% endblock %}
+{% block title %}Akce{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <h1>Akce</h1>
+        </div>
+    </div>
+    {% if stitky is not empty %}
+        <div class="row justify-content-center mt-3 mb-2">
+            <div class="col-12">
+                <div class="d-flex flex-wrap gap-1 justify-content-center">
+                    {% if aktivniStitek %}
+                        <a href="{{ path('app_akce') }}"
+                           class="btn btn-sm btn-secondary rounded-pill px-4 border-2 mb-2 mx-1">
+                            Bez výběru štítku
+                        </a>
+                    {% endif %}
+                    {% for stitek in stitky %}
+                        <a href="{{ path('app_akce', {stitek: stitek.url}) }}"
+                           class="btn btn-sm {% if aktivniStitek and aktivniStitek.id == stitek.id %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill px-4 border-2 mb-2 mx-1">
+                            {{ stitek }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/xampp/htdocs/petrinum/src/Controller/AktualityController.php</code></li>
-        <li>Your template at <code>C:/xampp/htdocs/petrinum/templates/aktuality/index.html.twig</code></li>
-    </ul>
-</div>
+    <div id="data-wrapper" class="row">
+
+        {% for ak in akce %}
+            {% include 'akce/_akce.html.twig' with { ak: ak } %}
+        {% else %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted">Žádné akce nebyly nalezeny.</p>
+            </div>
+        {% endfor %}
+    </div>
+    {% if (hasMore) %}
+        <div class="text-center mt-4">
+            <button id="load-more"
+                    class="btn btn-primary"
+                    data-url="{{ path('app_akce_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}"
+                    data-offset="{{ limit }}"
+                    data-limit="{{ limit }}">
+                Načíst další
+            </button>
+        </div>
+    {% endif %}
+
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('load-more_js') }}
 {% endblock %}

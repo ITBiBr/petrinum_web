@@ -83,7 +83,9 @@
     </footer>
 </div>
 
+{% block javascripts %}
 {# Webpack Encore JS #}
 {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </body>
 </html>

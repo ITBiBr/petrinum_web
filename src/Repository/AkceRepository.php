@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Akce;
+use App\Entity\Stitky;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +17,38 @@ class AkceRepository extends ServiceEntityRepository
         parent::__construct($registry, Akce::class);
     }
 
-    //    /**
-    //     * @return Aktuality[] Returns an array of Aktuality objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findAkceKZobrazeniPaginated(int $limit, int $offset, ?Stitky $stitek = null, bool $probehle = false): array
+    {
 
-    //    public function findOneBySomeField($value): ?Aktuality
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $qb = $this->createQueryBuilder('a');
+
+        if ($probehle) {
+            $qb->where('
+                    a.datumDo < CURRENT_DATE()
+                    OR (a.datumDo IS NULL AND a.datum < CURRENT_DATE())
+                ')
+                ->orderBy('a.datum', 'DESC');
+
+        } else {
+            $qb->where('a.datumZobrazeniOd <= CURRENT_TIMESTAMP()')
+                ->andWhere('
+                    a.datumDo >= CURRENT_DATE()
+                    OR (a.datumDo IS NULL AND a.datum >= CURRENT_DATE())
+                ')
+                ->orderBy('a.datum', 'ASC');
+        }
+
+        $qb->setMaxResults($limit)
+            ->setFirstResult($offset);
+
+
+        if ($stitek) {
+            $qb->innerJoin('a.stitkies', 's')
+                ->andWhere('s.id = :stitek')
+                ->setParameter('stitek', $stitek->getId());
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }
+
