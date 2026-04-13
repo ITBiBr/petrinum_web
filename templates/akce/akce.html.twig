@@ -22,13 +22,19 @@
                 {% block date %}{% endblock %}
 
                 {% if akce.fotos|length > 0 %}
-                <div class="row justify-content-center mt-4">
-                    <div class="col-xl-6 col-lg-9 col-10 text-justify-center">
-                        <img class="w-75" src="{{ asset(akce.fotos|first.soubor) |imagine_filter('ak_full_thumb') }}"
-                             alt="{{ akce.titulek }}">
+                    {% set firstFoto = akce.fotos|first %}
+
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-xl-6 col-lg-9 col-10 text-center">
+                            <a href="{{ asset(firstFoto.soubor) }}" class="glightbox" data-gallery="akce" data-title="{{ firstFoto.nazev }}">
+                                <img class="w-75"
+                                     src="{{ firstFoto.soubor | imagine_filter('ak_full_thumb') }}"
+                                     alt="{{ akce.titulek }}">
+                            </a>
+                        </div>
                     </div>
-                </div>
                 {% endif %}
+
 
                 {% if akce.Perex %}
                     <div class="row justify-content-center mt-5">
@@ -42,12 +48,25 @@
                         {{ akce.obsah|raw }}
                     </div>
                 </div>
-                {% for foto in akce.fotos %}
-                    <a href="{{ asset(foto.soubor) }}" class="glightbox">
-                        <img src="{{ foto.soubor | imagine_filter('ak_fotogallery_thumb') }}"
-                             class="img-fluid">
-                    </a>
-                {% endfor %}
+                {% if akce.fotos|length > 1 %}
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-xl-6 col-lg-9 col-10">
+                            <div class="gallery-grid">
+                                {% for foto in akce.fotos|slice(1) %}
+                                    <a href="{{ asset(foto.soubor) }}"
+                                       class="glightbox"
+                                       data-gallery="akce"
+                                       data-title="{{ foto.nazev }}">
+
+                                        <img src="{{ foto.soubor | imagine_filter('ak_fotogallery_thumb') }}"
+                                             class="img-fluid">
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
 
                 {% if akce.video %}
                     <div class ="row justify-content-center mt-4">
