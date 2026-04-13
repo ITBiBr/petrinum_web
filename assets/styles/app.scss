@@ -1,3 +1,11 @@
+// customize some Bootstrap variables
+
+$primary: rgb(64, 124, 158);
+$body-secondary-bg: rgb(64, 124, 158);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
 body {
     background-color: #f8f9fa;
 }
@@ -149,11 +157,6 @@ body {
 }
 
 
-// customize some Bootstrap variables
-
-$primary: rgba(33, 7, 104, 1);
-
-
 .akce-datum {
     position: absolute;
     top: 8px;
@@ -176,4 +179,7 @@ $primary: rgba(33, 7, 104, 1);
 .text-justify-right {
     text-align: justify;
     text-align-last: right;
+}
+.posun {
+    margin-top: -120px
 }

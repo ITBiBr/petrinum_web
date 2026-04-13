@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+{% if akce.fotos|length > 0 %}
+    {% set firstFoto = akce.fotos|first %}
+{% endif %}
 
 {% block title %}Akce - {{ akce.titulek }}{% endblock %}
 {% block meta %}
@@ -6,12 +9,13 @@
     <meta property="og:description" content="{{ akce.perex|striptags|trim }}">
     <meta property="og:type" content="article">
     <meta property="og:url" content="{{ app.request.uri }}">
-
-    <meta property="og:image:alt" content="{{ aktualita.titulek }}">
+    {% if akce.fotos|length > 1 %}
+    <meta property="og:image" content="{{ firstFoto.soubor | imagine_filter('ak_full_thumb') }}">
+    {% endif %}
+    <meta property="og:image:alt" content="{{ akce.titulek }}">
 {% endblock %}
 
 {% block body %}
-    <div class = "container-fluid pt-5 mt-3">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-12">
                 <div class="row justify-content-center text-center">
@@ -19,10 +23,19 @@
                         <h2 class="text-primary fw-bolder text-uppercase">{{ akce.titulek }}</h2>
                     </div>
                 </div>
-                {% block date %}{% endblock %}
+                {% block date %}
+                    <div class="row justify-content-center mt-2">
+                        <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
+                            <div class="date-badge py-2 px-3 text-white fw-semibold bg-primary d-inline-block">
+                                {{ akce.datum|date('j. n.') }}{% if akce.datumDo %} – {{ akce.datumDo|date('j. n.') }}{% endif %}
 
-                {% if akce.fotos|length > 0 %}
-                    {% set firstFoto = akce.fotos|first %}
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+
+                {% if firstFoto %}
+
 
                     <div class="row justify-content-center mt-4">
                         <div class="col-xl-6 col-lg-9 col-10 text-center">
@@ -87,7 +100,7 @@
 
             </div>
         </div>
-    </div>
+
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}

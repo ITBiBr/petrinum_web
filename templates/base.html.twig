@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{% block title %}Petrinum{% endblock %}</title>
-
+    {% block meta %}
+    {% endblock %}
+    {% block stylesheets %}
     {# Webpack Encore CSS #}
     {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -64,30 +67,31 @@
     </div>
 </header>
 
-{# ====================== OBSAH ====================== #}
-<main class="flex-grow-1 py-4">
-    <div class="container">
-        {% block body %}{% endblock %}
+<div class="posun">
+    {# ====================== OBSAH ====================== #}
+
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+
+    {# ====================== PATIČKA ====================== #}
+    <div class="footer-wrapper">
+        <footer class="py-3 mt-auto">
+            <div class="container text-center text-white small pt-5">
+                © {{ "now"|date("Y") }} Petrinum
+            </div>
+            <div class="container text-center text-white small mb-5">
+                Další text patičky
+            </div>
+        </footer>
     </div>
-</main>
-
-{# ====================== PATIČKA ====================== #}
-<div class="footer-wrapper">
-    <footer class="py-3 mt-auto">
-        <div class="container text-center text-white small pt-5">
-            © {{ "now"|date("Y") }} Petrinum
-        </div>
-        <div class="container text-center text-white small mb-5">
-            Další text patičky
-        </div>
-    </footer>
 </div>
-
 {% block javascripts %}
 {# Webpack Encore JS #}
 {{ encore_entry_script_tags('app') }}
 {% endblock %}
-{% block stylesheets %}
-{% endblock %}
+
 </body>
 </html>
