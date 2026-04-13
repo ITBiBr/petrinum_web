@@ -15,6 +15,7 @@ Encore
     //.setManifestKeyPrefix('build/')
 
     .addEntry('admin', './assets/admin.js')
+    .addEntry('load-more', './assets/load-more.js')
 
     /*
      * ENTRY CONFIG
