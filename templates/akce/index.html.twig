@@ -44,13 +44,14 @@
         <div class="text-center mt-4">
             <button id="load-more"
                     class="btn btn-primary"
-                    data-url="{{ path('app_akce_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}"
+                    data-url="{% if not probehle %}{{ path('app_akce_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% else %}{{ path('app_archiv_akci_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% endif %}"
                     data-offset="{{ limit }}"
                     data-limit="{{ limit }}">
                 Načíst další
             </button>
         </div>
     {% endif %}
+
 
 
 
