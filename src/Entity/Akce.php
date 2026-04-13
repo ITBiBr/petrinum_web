@@ -44,10 +44,17 @@ class Akce implements FotoInterface
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
+    /**
+     * @var Collection<int, Stitky>
+     */
+    #[ORM\ManyToMany(targetEntity: Stitky::class, mappedBy: 'Akce')]
+    private Collection $stitkies;
+
     public function __construct()
     {
         $this->fotos = new ArrayCollection();
         $this->datumVlozeni = new \DateTime();
+        $this->stitkies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,6 +172,33 @@ class Akce implements FotoInterface
     public function setVideo(?string $Video): static
     {
         $this->Video = $Video;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stitky>
+     */
+    public function getStitkies(): Collection
+    {
+        return $this->stitkies;
+    }
+
+    public function addStitky(Stitky $stitky): static
+    {
+        if (!$this->stitkies->contains($stitky)) {
+            $this->stitkies->add($stitky);
+            $stitky->addAkce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStitky(Stitky $stitky): static
+    {
+        if ($this->stitkies->removeElement($stitky)) {
+            $stitky->removeAkce($this);
+        }
 
         return $this;
     }

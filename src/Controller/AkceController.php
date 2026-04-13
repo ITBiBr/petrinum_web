@@ -14,7 +14,7 @@ final class AkceController extends AbstractController
     public function index(): Response
     {
         return $this->render('akce/index.html.twig', [
-            'controller_name' => 'AktualityController',
+
         ]);
     }
 }
