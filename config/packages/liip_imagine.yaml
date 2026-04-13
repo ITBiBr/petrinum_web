@@ -9,3 +9,20 @@ liip_imagine:
                 thumbnail:
                     size: [ 600, 600]
                     mode: inset
+        ak_full_thumb:
+
+            # adjust the image quality to 95%
+            quality: 95
+
+            # list of transformations to apply (the "filters")
+            filters:
+                auto_rotate: ~
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail: { size: [ 913, 515 ], mode: outbound }
+        ak_fotogallery_thumb:
+            quality: 85
+            filters:
+                thumbnail:
+                    size: [ 200, 200]
+                    mode: outbound

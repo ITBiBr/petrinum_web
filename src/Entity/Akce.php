@@ -23,7 +23,7 @@ class Akce implements FotoInterface
     private ?string $titulek = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Video = null;
+    private ?string $video = null;
     #[ORM\Column]
     private ?\DateTime $datum = null;
 
@@ -172,12 +172,12 @@ class Akce implements FotoInterface
 
     public function getVideo(): ?string
     {
-        return $this->Video;
+        return $this->video;
     }
 
-    public function setVideo(?string $Video): static
+    public function setVideo(?string $video): static
     {
-        $this->Video = $Video;
+        $this->video = $video;
 
         return $this;
     }

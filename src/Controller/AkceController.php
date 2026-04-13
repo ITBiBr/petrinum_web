@@ -3,17 +3,20 @@
 namespace App\Controller;
 
 use App\Controller\Admin\UrlTrait;
+use App\Entity\Akce;
 use App\Repository\AkceRepository;
 use App\Repository\StitkyRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class AkceController extends AbstractController
 {
     use UrlTrait;
-    #[Route('/akce/{stitek?}', name: 'app_akce')]
+    #[Route('/kalendar-akci/{stitek?}', name: 'app_akce')]
     #[Route('/archiv-akci/{stitek?}', name: 'app_archiv_akci')]
     public function index(StitkyRepository $stitkyRepository, AkceRepository $akceRepository, ?string $stitek = null, Request $request): Response {
         $limit = 12;
@@ -65,6 +68,20 @@ final class AkceController extends AbstractController
             'hasMore' => $hasMore,
             'newOffset' => $offset + $limit,
             'probehle' => $jeProbehle
+        ]);
+    }
+
+    #[Route('/akce/{url}', name: 'akce_url')]
+    public function showAkce(string $url, EntityManagerInterface $entityManager): Response
+    {
+        $akce = $entityManager->getRepository(Akce::class)->findOneBy(['url'=>$url]);
+
+        if (!$akce)
+            throw new NotFoundHttpException();
+        return $this->render('akce/akce.html.twig', [
+            'controller_name' => 'AkceController',
+            'akce' => $akce,
+            'paticka'=> true,
         ]);
     }
 }

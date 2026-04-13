@@ -154,4 +154,26 @@ body {
 $primary: rgba(33, 7, 104, 1);
 
 
-
+.akce-datum {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgb(64, 124, 158);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+}
+.text-justify-center {
+    text-align: justify;
+    text-align-last: center;
+}
+.text-justify-left {
+    text-align: justify;
+    text-align-last: left;
+}
+.text-justify-right {
+    text-align: justify;
+    text-align-last: right;
+}
