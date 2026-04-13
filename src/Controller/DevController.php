@@ -62,12 +62,22 @@ class DevController
             $obsah = $item->getObsah();
 
             if ($obsah) {
-                // odstranění HTML tagů (doporučeno)
-                $text = strip_tags($obsah);
+                $text = trim(strip_tags($obsah));
+                $limit = 50;
 
-                // zkrácení na 50 znaků (UTF-8 safe)
-                if (mb_strlen($text) > 50) {
-                    $perex = mb_substr($text, 0, 50) . '...';
+                if (mb_strlen($text) > $limit) {
+                    // vezmeme o trochu víc, ať máme prostor najít celé slovo
+                    $cut = mb_substr($text, 0, $limit + 10);
+
+                    // najdeme poslední mezeru
+                    $lastSpace = mb_strrpos($cut, ' ');
+
+                    if ($lastSpace !== false) {
+                        $perex = mb_substr($cut, 0, $lastSpace) . '...';
+                    } else {
+                        // fallback když není mezera
+                        $perex = mb_substr($text, 0, $limit) . '...';
+                    }
                 } else {
                     $perex = $text;
                 }
@@ -80,4 +90,5 @@ class DevController
 
         return new Response('Hotovo!');
     }
+
 }
