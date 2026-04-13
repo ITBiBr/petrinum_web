@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 {% if akce.fotos|length > 0 %}
     {% set firstFoto = akce.fotos|first %}
+{% else %}
+    {% set firstFoto = false %}
 {% endif %}
 
 {% block title %}Akce - {{ akce.titulek }}{% endblock %}
