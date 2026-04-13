@@ -36,7 +36,8 @@ class Clanky
     /**
      * @var Collection<int, Foto>
      */
-    #[ORM\OneToMany(targetEntity: Foto::class, mappedBy: 'Clanky')]
+    #[ORM\OneToMany(targetEntity: Foto::class, mappedBy: 'Clanky', cascade: ['remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $fotos;
 
     public function __construct()
