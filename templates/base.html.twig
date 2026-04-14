@@ -15,13 +15,13 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-<div class="hero-image">
+<div class="hero-wrapper">
     <img src="{{ asset('images/budova.jpg') }}" class="budova">
 </div>
-{# ====================== HLAVIČKA ====================== #}
-<header class="sticky-top custom-navbar">
-    <div class="navbar-wrapper">
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+<div class="sticky-top">
+<header class="navbar-wrapper">
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container align-items-end">
 
             <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ path('app_main') }}">
@@ -59,6 +59,18 @@
                             <li>
                                 <a class="dropdown-item" href="{{path('app_archiv_akci')}}">Archiv akcí</a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="{{path('app_akce')}}">Akce</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{path('app_archiv_akci')}}">Archiv akcí</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{path('app_akce')}}">Akce</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{path('app_archiv_akci')}}">Archiv akcí</a>
+                            </li>
                         </ul>
                     </li>
 
@@ -75,31 +87,34 @@
             </div>
 
         </div>
-    </nav>
-    </div>
-</header>
+        </nav>
 
-<div class="posun">
-    {# ====================== OBSAH ====================== #}
-
-    <main class="flex-grow-1 py-4">
-        <div class="container">
-            {% block body %}{% endblock %}
-        </div>
-    </main>
-
-    {# ====================== PATIČKA ====================== #}
-    <div class="footer-wrapper">
-        <footer class="py-3 mt-auto">
-            <div class="container text-center text-white small pt-5">
-                © {{ "now"|date("Y") }} Petrinum
-            </div>
-            <div class="container text-center text-white small mb-5">
-                Další text patičky
-            </div>
-        </footer>
-    </div>
+    </header>
 </div>
+</div>
+
+
+{# ====================== OBSAH ====================== #}
+
+<main class="flex-grow-1 py-4">
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+</main>
+
+{# ====================== PATIČKA ====================== #}
+<div class="footer-wrapper">
+    <footer class="py-3 mt-auto">
+        <div class="container text-center text-white small pt-5">
+            © {{ "now"|date("Y") }} Petrinum
+        </div>
+        <div class="container text-center text-white small mb-5">
+            Další text patičky
+        </div>
+    </footer>
+</div>
+
+
 {% block javascripts %}
 {# Webpack Encore JS #}
 {{ encore_entry_script_tags('app') }}
