@@ -29,7 +29,7 @@ final class AkceController extends AbstractController
 
         $aktivniStitek = $stitek ? $stitkyRepository->findOneBy(['url' => $stitek]) : null;
 
-        $stitky = $stitkyRepository->findStitkySAkcemi();
+        $stitky = $stitkyRepository->findStitkySPlatnymiAkcemi($jeProbehle, $mesic, $rok);
         $akce = $akceRepository->findAkceKZobrazeniPaginated($limit + 1, $offset, $aktivniStitek, $jeProbehle, $mesic, $rok);
 
         $archive = $akceRepository->getArchiveStructured();

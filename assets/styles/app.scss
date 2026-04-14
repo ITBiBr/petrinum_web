@@ -17,13 +17,19 @@ body {
 }
 
 .navbar-wrapper {
-    padding-top: 120px;
     position: relative;
+    padding-top: 120px;
     top: -120px;
     padding-bottom: 8px;
+    background: none;
+}
+
+.navbar-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
 
     background: linear-gradient(342deg, #04486f, #84b6d1);
-
 
     mask-image: linear-gradient(
             to bottom,
@@ -32,7 +38,40 @@ body {
             black calc(100% - 8px),
             transparent 100%
     );
+
+    z-index: 0;
 }
+
+/* obsah nad tím */
+.navbar-wrapper > * {
+    position: relative;
+    z-index: 1;
+}
+.dropdown-menu {
+    border-radius: 0; /* hranaté */
+    border: none;
+
+    background: rgb(31, 93, 129); /* tmavě modrá */
+    backdrop-filter: blur(6px); /* jemný moderní efekt */
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    padding: 0.5rem 0;
+}
+.dropdown-item {
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    transition: all 0.2s ease;
+}
+.dropdown-item:hover {
+    background: rgba(132, 182, 209, 0.2); /* světle modrá z gradientu */
+    color: #fff;
+    transform: translateX(4px);
+}
+.dropdown-item.active {
+    background: rgba(132, 182, 209, 0.35);
+    font-weight: 600;
+}
+
 .footer-wrapper {
     padding-top: 120px;
     position: relative;

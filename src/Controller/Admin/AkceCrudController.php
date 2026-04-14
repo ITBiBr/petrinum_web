@@ -9,6 +9,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -57,8 +59,10 @@ class AkceCrudController extends AbstractCrudController
     {
         if (!$this->security->isGranted('ROLE_EDITOR'))
             throw new AccessDeniedException('Access Denied');
-
+        yield DateField::new('datum', 'Date');
         yield TextField::new('titulek', 'Title');
+        yield AssociationField::new('stitkies', 'Labels')->setFormTypeOption('by_reference', false)->formatValue(fn($value) => implode('<br>', $value->toArray()));
+
         yield Field::new('upload')
             ->setFormType(DropzoneType::class)
             ->setFormTypeOptions([

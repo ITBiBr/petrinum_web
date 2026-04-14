@@ -10,16 +10,16 @@
     </div>
     {% if stitky is not empty %}
         <div class="row justify-content-center mt-3 mb-2">
-            <div class="col-12">
+            <div class="col-xl-6 col-lg-9 col-10">
                 <div class="d-flex flex-wrap gap-1 justify-content-center">
                     {% if aktivniStitek %}
-                        <a href="{{ path('app_akce') }}"
+                        <a href="{% if not mesicni %}{% if probehle %}{{ path('app_archiv_akci') }}{% else %}{{ path('app_akce') }}{% endif %}{% else %}{{ path('app_archiv_akci_mesic', {rok: rok, mesic:mesic}) }}{% endif %}"
                            class="btn btn-sm btn-secondary rounded-pill px-4 border-2 mb-2 mx-1">
                             Bez výběru štítku
                         </a>
                     {% endif %}
                     {% for stitek in stitky %}
-                        <a href="{{ path('app_akce', {stitek: stitek.url}) }}"
+                        <a href="{% if not mesicni %}{% if probehle %}{{ path('app_archiv_akci', {stitek: stitek.url}) }}{% else %}{{ path('app_akce', {stitek: stitek.url}) }}{% endif %}{% else %}{{ path('app_archiv_akci_mesic', {rok: rok, mesic:mesic,stitek: stitek.url}) }}{% endif %}"
                            class="btn btn-sm {% if aktivniStitek and aktivniStitek.id == stitek.id %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill px-4 border-2 mb-2 mx-1">
                             {{ stitek }}
                         </a>
@@ -56,7 +56,7 @@
         {% for rok, mesice in archive %}
             {% if rok != 0 %}
             <div class="col-xxl-1 col-lg-2 col-4">
-                <h3>{{ rok }}</h3>
+                <h3 class="text-primary">{{ rok }}</h3>
 
                 <ul class="list-unstyled">
                     {% for cislo, mesic in mesice %}
@@ -64,8 +64,7 @@
                         <li>
                             <a href="{{ path('app_archiv_akci_mesic', {
                                 rok: rok,
-                                mesic: cislo,
-                                stitek: aktivniStitek ? aktivniStitek.url : null,
+                                mesic: cislo
                             }) }}"
                                class="text-decoration-none link-dark">
                                 {{ mesic }}

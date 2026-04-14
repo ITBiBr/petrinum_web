@@ -59,5 +59,6 @@ class DashboardController extends AbstractDashboardController
         }
         yield MenuItem::linkTo(ClankyCrudController::class, 'Articles', 'fa fa-newspaper')->setPermission('ROLE_EDITOR');
         yield MenuItem::linkTo(AkceCrudController::class, 'Events', 'fa fa-calendar')->setPermission('ROLE_EDITOR');
+        yield MenuItem::linkTo(StitkyCrudController::class, 'Labels', 'fa fa-tags', )->setPermission('ROLE_EDITOR');
     }
 }
