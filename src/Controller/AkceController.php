@@ -18,16 +18,21 @@ final class AkceController extends AbstractController
     use UrlTrait;
     #[Route('/kalendar-akci/{stitek?}', name: 'app_akce')]
     #[Route('/archiv-akci/{stitek?}', name: 'app_archiv_akci')]
-    public function index(StitkyRepository $stitkyRepository, AkceRepository $akceRepository, ?string $stitek = null, Request $request): Response {
+    #[Route('/archiv-akci-mesicni/{rok}/{mesic}/{stitek?}', name: 'app_archiv_akci_mesic')]
+    public function index(Request $request, StitkyRepository $stitkyRepository, AkceRepository $akceRepository, ?string $stitek = null, ?int $rok = null, ?int $mesic = null): Response {
         $limit = 12;
         $offset = 0;
-        $jeProbehle = $request->attributes
-                ->get('_route') === 'app_archiv_akci';
+        $jeMesicni = $request->attributes
+                ->get('_route') === 'app_archiv_akci_mesic';
+        $jeProbehle = ($request->attributes
+                ->get('_route') === 'app_archiv_akci' or $jeMesicni);
+
         $aktivniStitek = $stitek ? $stitkyRepository->findOneBy(['url' => $stitek]) : null;
 
         $stitky = $stitkyRepository->findStitkySAkcemi();
-        $akce = $akceRepository->findAkceKZobrazeniPaginated($limit + 1, $offset, $aktivniStitek, $jeProbehle);
+        $akce = $akceRepository->findAkceKZobrazeniPaginated($limit + 1, $offset, $aktivniStitek, $jeProbehle, $mesic, $rok);
 
+        $archive = $akceRepository->getArchiveStructured();
         $hasMore = count($akce) > $limit;
         $akce = array_slice($akce, 0, $limit);
 
@@ -38,22 +43,28 @@ final class AkceController extends AbstractController
             'stitky' => $stitky,
             'hasMore' => $hasMore,
             'aktivniStitek' => $aktivniStitek,
-            'probehle' => $jeProbehle
+            'probehle' => $jeProbehle,
+            'mesicni' => $jeMesicni,
+            'mesic' => $mesic,
+            'rok' => $rok,
+            'archive' => $archive,
         ]);
     }
 
     #[Route('/akce-load-more/{stitek?}', name: 'app_akce_load_more')]
     #[Route('/archiv-akci-load-more/{stitek?}', name: 'app_archiv_akci_load_more')]
-    public function loadMore(Request $request, StitkyRepository $stitkyRepository, AkceRepository $akceRepository, ?string $stitek = null): Response {
+    #[Route('/archiv-akci-load-more-mesicni/{rok}/{mesic}/{stitek?}', name: 'app_archiv_akci_load_more_mesic')]
+    public function loadMore(Request $request, StitkyRepository $stitkyRepository, AkceRepository $akceRepository, ?string $stitek = null, ?int $rok = null, ?int $mesic = null): Response {
         $limit = 9;
         $offset = (int) $request->query->get('offset', 0);
-        $jeProbehle = $request->attributes
-                ->get('_route') === 'app_archiv_akci_load_more';
+        $jeProbehle = ($request->attributes
+                ->get('_route') === 'app_archiv_akci_load_more 'or $request->attributes
+                ->get('_route') === 'app_archiv_akci_load_more_mesic');
 
         $aktivniStitek = $stitek ? $stitkyRepository->findOneBy(['url' => $stitek]) : null;
 
         // načteme o 1 víc
-        $data = $akceRepository->findAkceKZobrazeniPaginated($limit + 1, $offset, $aktivniStitek, $jeProbehle);
+        $data = $akceRepository->findAkceKZobrazeniPaginated($limit + 1, $offset, $aktivniStitek, $jeProbehle, $mesic, $rok);
 
         $hasMore = count($data) > $limit;
         $akce = array_slice($data, 0, $limit);

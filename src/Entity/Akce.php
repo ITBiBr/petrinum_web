@@ -59,7 +59,7 @@ class Akce implements FotoInterface
     public function __construct()
     {
         $this->fotos = new ArrayCollection();
-        $this->datumVlozeni = new \DateTime();
+        $this->datum = new \DateTime();
         $this->stitkies = new ArrayCollection();
     }
 

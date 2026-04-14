@@ -26,6 +26,7 @@
         "twig/twig": "^2.12|^3.24"
     },
     "require-dev": {
+        "symfony/debug-bundle": "7.4.*",
         "symfony/maker-bundle": "^1.67",
         "symfony/stopwatch": "7.4.*",
         "symfony/web-profiler-bundle": "7.4.*"

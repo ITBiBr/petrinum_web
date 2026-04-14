@@ -124,5 +124,79 @@ class DevController
         return new Response('Hotovo!');
     }
 
+    #[Route('/dev/fill-date-from-text', name: 'dev_fill_date_from_text')]
+    public function fillDateFromText(EntityManagerInterface $em)
+    {
+        $repo = $em->getRepository(Akce::class);
+        $items = $repo->findAll();
+
+        foreach ($items as $item) {
+            $datum = $item->getDatum();
+
+            if ($datum !== null && $datum->format('Y') > 1900) {
+                continue;
+            }
+
+            $text = $item->getObsah() ?: '';
+            $text .= ' ' . ($item->getObsahPokracovani() ?: '');
+
+            $day = $month = $year = null;
+
+            // 1. dd.mm.yyyy
+            if (preg_match('/(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/', $text, $m)) {
+                $day = $m[1];
+                $month = $m[2];
+                $year = $m[3];
+            }
+            // 2. 1. února 2011
+            elseif (preg_match('/(\d{1,2})\.\s*([a-záčďéěíňóřšťúůýž]+)\s*(\d{4})/iu', $text, $m)) {
+
+                $day = $m[1];
+                $monthName = mb_strtolower($m[2]);
+                $year = $m[3];
+
+                $months = [
+                    'ledna' => 1,
+                    'února' => 2,
+                    'brezna' => 3,
+                    'března' => 3,
+                    'dubna' => 4,
+                    'května' => 5,
+                    'kvetna' => 5,
+                    'června' => 6,
+                    'cervna' => 6,
+                    'července' => 7,
+                    'cervence' => 7,
+                    'srpna' => 8,
+                    'září' => 9,
+                    'zari' => 9,
+                    'října' => 10,
+                    'rijna' => 10,
+                    'listopadu' => 11,
+                    'prosince' => 12,
+                ];
+
+                if (!isset($months[$monthName])) {
+                    continue;
+                }
+
+                $month = $months[$monthName];
+            } else {
+                continue;
+            }
+
+            if ($day && $month && $year && checkdate($month, $day, $year)) {
+                $date = new \DateTime(sprintf('%04d-%02d-%02d 00:00:00', $year, $month, $day));
+                $item->setDatum($date);
+            }
+        }
+
+        $em->flush();
+
+
+        return new Response('Hotovo!');
+    }
+
+
 
 }

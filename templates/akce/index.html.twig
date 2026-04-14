@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Akce{% endblock %}
+{% block title %}{% if not probehle %}Akce{% else %}Archiv akcí{% endif %}{% endblock %}
 
 {% block body %}
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-2">
         <div class="col-12 text-center">
-            <h1>Akce</h1>
+            <h2 class="text-primary fw-bolder text-uppercase">{% if not probehle %}Akce{% else %}Archiv akcí{% endif %}</h2>
         </div>
     </div>
     {% if stitky is not empty %}
@@ -30,7 +30,7 @@
     {% endif %}
 
 
-    <div id="data-wrapper" class="row">
+    <div id="data-wrapper" class="row mt-3">
 
         {% for ak in akce %}
             {% include 'akce/_akce.html.twig' with { ak: ak } %}
@@ -44,13 +44,41 @@
         <div class="text-center mt-4">
             <button id="load-more"
                     class="btn btn-primary"
-                    data-url="{% if not probehle %}{{ path('app_akce_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% else %}{{ path('app_archiv_akci_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% endif %}"
+                    data-url="{% if not mesicni %}{% if not probehle %}{{ path('app_akce_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% else %}{{ path('app_archiv_akci_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% endif %}{% else %}{{ path('app_archiv_akci_load_more_mesic', { mesic: mesic, rok: rok, stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% endif %}"
                     data-offset="{{ limit }}"
                     data-limit="{{ limit }}">
                 Načíst další
             </button>
         </div>
     {% endif %}
+    {% if probehle %}
+    <div class="row mt-5">
+        {% for rok, mesice in archive %}
+            {% if rok != 0 %}
+            <div class="col-xxl-1 col-lg-2 col-4">
+                <h3>{{ rok }}</h3>
+
+                <ul class="list-unstyled">
+                    {% for cislo, mesic in mesice %}
+
+                        <li>
+                            <a href="{{ path('app_archiv_akci_mesic', {
+                                rok: rok,
+                                mesic: cislo,
+                                stitek: aktivniStitek ? aktivniStitek.url : null,
+                            }) }}"
+                               class="text-decoration-none link-dark">
+                                {{ mesic }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
 
 
 
