@@ -44,12 +44,12 @@ class DevController
             }
 
             $item->setUrl($url);
-            $existingUrls[] = $url; // 🔥 klíčové
+            $existingUrls[] = $url;
         }
 
         $em->flush();
 
-        return new Response('Hotovo 👍');
+        return new Response('Hotovo');
     }
 
     #[Route('/dev/generate-perex', name: 'dev_generate_perex')]
@@ -92,5 +92,37 @@ class DevController
 
         return new Response('Hotovo!');
     }
+
+
+    #[Route('/dev/replace-tags', name: 'dev_replace_tags')]
+    public function replaceITags(EntityManagerInterface $em)
+    {
+        $repo = $em->getRepository(Akce::class);
+        $items = $repo->findAll();
+
+        foreach ($items as $item) {
+            $obsah = $item->getObsah();
+            $obsahPokracovani = $item->getObsahPokracovani();
+
+            if ($obsah) {
+                $obsah = preg_replace('/\[i\](.*?)\[\/i\]/is', '<i>$1</i>', $obsah);
+                $obsah = preg_replace('/\[b\](.*?)\[\/b\]/is', '<strong>$1</strong>', $obsah);
+                $obsah = preg_replace('/\[u\](.*?)\[\/u\]/is', '<u>$1</u>', $obsah);
+                $item->setObsah($obsah);
+            }
+
+            if ($obsahPokracovani) {
+                $obsahPokracovani = preg_replace('/\[i\](.*?)\[\/i\]/is', '<i>$1</i>', $obsahPokracovani);
+                $obsahPokracovani = preg_replace('/\[b\](.*?)\[\/b\]/is', '<strong>$1</strong>', $obsahPokracovani);
+                $obsahPokracovani = preg_replace('/\[u\](.*?)\[\/u\]/is', '<u>$1</u>', $obsahPokracovani);
+                $item->setObsahPokracovani($obsahPokracovani);
+            }
+        }
+
+        $em->flush();
+
+        return new Response('Hotovo!');
+    }
+
 
 }
