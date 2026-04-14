@@ -116,11 +116,15 @@ body {
     }
 }
 
-
+.navbar-nav
+{
+    padding-bottom: 0.5rem
+}
 
 /* Odkazy v menu trochu vyšší */
 .nav-link-fancy {
-    padding: 0.7rem 1rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.55rem;
     border-radius: 0.2rem;
     transition: all 0.25s ease;
 }
