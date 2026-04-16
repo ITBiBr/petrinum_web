@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Admin\EditTextTrait;
 use App\Entity\Akce;
 use App\Repository\AkceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,6 +12,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class DevController
 {
+    use EditTextTrait;
     #[Route('/dev/generate-slugs', name: 'dev_generate_slugs')]
     public function generateSlugs(
         AkceRepository         $repo,
@@ -123,6 +125,24 @@ class DevController
 
         return new Response('Hotovo!');
     }
+
+    #[Route('/dev/add-nbsp', name: 'dev_add_nbsp')]
+    public function nbsp(EntityManagerInterface $em)
+    {
+        $repo = $em->getRepository(Akce::class);
+        $items = $repo->findAll();
+
+        foreach ($items as $item) {
+            $item->setObsah($this->addNbsp($item->getObsah()));
+            $item->setObsahPokracovani($this->addNbsp($item->getObsahPokracovani()));
+            $item->setPerex($this->addNbsp($item->getPerex()));
+        }
+
+        $em->flush();
+
+        return new Response('Hotovo!');
+    }
+
 
     #[Route('/dev/fill-date-from-text', name: 'dev_fill_date_from_text')]
     public function fillDateFromText(EntityManagerInterface $em)
