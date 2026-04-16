@@ -20,7 +20,9 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 class AkceCrudController extends AbstractCrudController
 {
-    use UrlTrait;
+    use UrlTrait {
+        persistEntity as persistEntityFromTrait;
+    }
     use EditTextTrait;
     public static function getEntityFqcn(): string
     {
@@ -85,8 +87,9 @@ class AkceCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        parent::persistEntity($entityManager,$this->nbsp($entityInstance));
+        $this->persistEntityFromTrait($entityManager, $this->nbsp($entityInstance));
     }
+
 
     public function updateEntity(EntityManagerInterface $entityManager, object $entityInstance): void
     {
