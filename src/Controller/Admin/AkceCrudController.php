@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Akce;
 use App\Form\Type\DropzoneType;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -12,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -19,6 +21,7 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 class AkceCrudController extends AbstractCrudController
 {
     use UrlTrait;
+    use EditTextTrait;
     public static function getEntityFqcn(): string
     {
         return Akce::class;
@@ -61,6 +64,8 @@ class AkceCrudController extends AbstractCrudController
             throw new AccessDeniedException('Access Denied');
         yield DateField::new('datum', 'Date');
         yield TextField::new('titulek', 'Title');
+        yield TextEditorField::new('obsah', 'Content');
+        yield TextEditorField::new('obsahPokracovani' ,'Article content - continued')->hideOnIndex();
         yield AssociationField::new('stitkies', 'Labels')->setFormTypeOption('by_reference', false)->formatValue(fn($value) => implode('<br>', $value->toArray()));
 
         yield Field::new('upload')
@@ -78,6 +83,23 @@ class AkceCrudController extends AbstractCrudController
 
     }
 
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::persistEntity($entityManager,$this->nbsp($entityInstance));
+    }
 
+    public function updateEntity(EntityManagerInterface $entityManager, object $entityInstance): void
+    {
+        parent::updateEntity($entityManager,$this->nbsp($entityInstance));
+    }
+
+    private function nbsp($entityInstance){
+        if ($entityInstance instanceof Akce) {
+            $entityInstance->setPerex($this->addNbsp($entityInstance->getPerex()));
+            $entityInstance->setObsah($this->addNbsp($entityInstance->getObsah()));
+            $entityInstance->setObsahPokracovani($this->addNbsp($entityInstance->getObsahPokracovani()));
+        }
+        return $entityInstance;
+    }
 
 }
