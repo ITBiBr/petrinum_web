@@ -24,8 +24,8 @@ final class AkceController extends AbstractController
         $offset = 0;
         $jeMesicni = $request->attributes
                 ->get('_route') === 'app_archiv_akci_mesic';
-        $jeProbehle = ($request->attributes
-                ->get('_route') === 'app_archiv_akci' or $jeMesicni);
+        $jeProbehle = (($request->attributes
+                ->get('_route') === 'app_archiv_akci') or $jeMesicni);
 
         $aktivniStitek = $stitek ? $stitkyRepository->findOneBy(['url' => $stitek]) : null;
 
@@ -57,12 +57,11 @@ final class AkceController extends AbstractController
     public function loadMore(Request $request, StitkyRepository $stitkyRepository, AkceRepository $akceRepository, ?string $stitek = null, ?int $rok = null, ?int $mesic = null): Response {
         $limit = 9;
         $offset = (int) $request->query->get('offset', 0);
-        $jeProbehle = ($request->attributes
-                ->get('_route') === 'app_archiv_akci_load_more 'or $request->attributes
-                ->get('_route') === 'app_archiv_akci_load_more_mesic');
+        $jeProbehle = (($request->attributes
+                    ->get('_route') === 'app_archiv_akci_load_more') or ($request->attributes
+                    ->get('_route') === 'app_archiv_akci_load_more_mesic'));
 
         $aktivniStitek = $stitek ? $stitkyRepository->findOneBy(['url' => $stitek]) : null;
-
         // načteme o 1 víc
         $data = $akceRepository->findAkceKZobrazeniPaginated($limit + 1, $offset, $aktivniStitek, $jeProbehle, $mesic, $rok);
 
