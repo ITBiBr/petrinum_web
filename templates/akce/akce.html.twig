@@ -8,7 +8,7 @@
 {% block title %}Akce - {{ akce.titulek }}{% endblock %}
 {% block meta %}
     <meta property="og:title" content="Jan Bula a Václav Drbola - {{ akce.titulek }}">
-    <meta property="og:description" content="{{ akce.perex|striptags|trim }}">
+    <meta property="og:description" content="{% block content_description %}{{ akce.perex|striptags|trim }}{% endblock %}">
     <meta property="og:type" content="article">
     <meta property="og:url" content="{{ app.request.uri }}">
     {% if akce.fotos|length > 1 %}
@@ -25,6 +25,7 @@
                         <h2 class="text-primary fw-bolder text-uppercase">{{ akce.titulek }}</h2>
                     </div>
                 </div>
+
                 {% block date %}
                     <div class="row justify-content-center mt-2">
                         <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
@@ -35,6 +36,7 @@
                         </div>
                     </div>
                 {% endblock %}
+
 
                 {% if firstFoto %}
 
@@ -50,14 +52,15 @@
                     </div>
                 {% endif %}
 
-
-                {% if akce.Perex %}
-                    <div class="row justify-content-center mt-5">
-                        <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
-                            <strong>{{ akce.perex|raw }}</strong>
+                {% block perex %}
+                    {% if akce.Perex %}
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
+                                <strong>{{ akce.perex|raw }}</strong>
+                            </div>
                         </div>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                {% endblock %}
                 <div class="row justify-content-center mt-4">
                     <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
                         {{ akce.obsah|raw }}

@@ -79,7 +79,7 @@ class AkceCrudController extends AbstractCrudController
                 ],
             ])
             ->onlyOnForms();
-
+        yield TextField::new('Video', 'Video (YouTube ID)')->hideOnIndex();
 
     }
 

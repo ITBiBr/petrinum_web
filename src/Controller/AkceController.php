@@ -92,7 +92,6 @@ final class AkceController extends AbstractController
         return $this->render('akce/akce.html.twig', [
             'controller_name' => 'AkceController',
             'akce' => $akce,
-            'paticka'=> true,
         ]);
     }
 }
