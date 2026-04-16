@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Clanky;
 use App\Form\Type\DropzoneType;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -19,6 +20,7 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 class ClankyCrudController extends AbstractCrudController
 {
     use UrlTrait;
+    use EditTextTrait;
     public static function getEntityFqcn(): string
     {
         return Clanky::class;
@@ -78,6 +80,22 @@ class ClankyCrudController extends AbstractCrudController
             ->onlyOnForms();
 
     }
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::persistEntity($entityManager,$this->nbsp($entityInstance));
+    }
 
+    public function updateEntity(EntityManagerInterface $entityManager, object $entityInstance): void
+    {
+        parent::updateEntity($entityManager,$this->nbsp($entityInstance));
+    }
+
+    private function nbsp($entityInstance){
+        if ($entityInstance instanceof Clanky) {
+            $entityInstance->setObsah($this->addNbsp($entityInstance->getObsah()));
+            $entityInstance->setObsahPokracovani($this->addNbsp($entityInstance->getObsahPokracovani()));
+        }
+        return $entityInstance;
+    }
 
 }
