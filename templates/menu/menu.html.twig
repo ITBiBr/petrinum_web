@@ -1,0 +1,63 @@
+{# templates/menu/menu.html.twig #}
+
+<ul class="navbar-nav ms-auto align-items-end">
+    {% for item in menu %}
+        {{ _self.render_item(item) }}
+    {% endfor %}
+</ul>
+
+{% macro render_item(item) %}
+    {% if item.children|length > 0 %}
+        <li class="nav-item dropdown">
+            <a class="nav-link nav-link-fancy fs-5 fw-bold text-white dropdown-toggle"
+               href="#"
+               role="button"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">
+                {{ item.nazev }}
+            </a>
+
+            <ul class="dropdown-menu">
+                {% for child in item.children %}
+                    {{ _self.render_dropdown_item(child) }}
+                {% endfor %}
+            </ul>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link nav-link-fancy fs-5 fw-bold text-white"
+               href="{{ item.routeName
+               ? path(item.routeName, item.routeParams ?? {})
+               : '#' }}">
+                {{ item.nazev }}
+            </a>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro render_dropdown_item(item) %}
+    {% if item.children|length > 0 %}
+        {# Bootstrap neumí dobře nested dropdown → basic fallback #}
+        <li class="dropdown-submenu">
+            <a class="dropdown-item dropdown-toggle" href="#">
+                {{ item.nazev }}
+            </a>
+
+            <ul class="dropdown-menu">
+                {% for child in item.children %}
+                    {{ _self.render_dropdown_item(child) }}
+                {% endfor %}
+            </ul>
+        </li>
+    {% else %}
+        <li>
+            <a class="dropdown-item"
+               href="{{ item.routeName
+               ? path(item.routeName, item.routeParams ?? {})
+               : '#' }}">
+                {{ item.nazev }}
+            </a>
+        </li>
+    {% endif %}
+{% endmacro %}
