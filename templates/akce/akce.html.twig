@@ -88,14 +88,30 @@
 
 
     {% if akce.video %}
-        <div class ="row justify-content-center mt-4">
-            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10 pt-sm-0 pt-2">
-                <div class="ratio ratio-16x9">
-                    <iframe class = "rounded" src="https://www.youtube.com/embed/{{ akce.video }}" title="{{ akce.titulek }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-            </div>
+        {% set videos = akce.video|split(';') %}
+
+        <div class="row justify-content-center my-4">
+            {% for video in videos %}
+                {% set videoId = video|trim %}
+
+                {% if videoId %}
+                    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10 my-2">
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                class="rounded"
+                                src="https://www.youtube.com/embed/{{ videoId }}"
+                                title="{{ akce.titulek }}"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
     {% endif %}
+
     {% if akce.obsahPokracovani %}
         <div class="row justify-content-center mt-4">
             <div class="col-lg-8 col-12 text-justify-left">

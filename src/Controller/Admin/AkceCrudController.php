@@ -66,9 +66,8 @@ class AkceCrudController extends AbstractCrudController
             throw new AccessDeniedException('Access Denied');
         yield DateField::new('datum', 'Date');
         yield TextField::new('titulek', 'Title');
-        yield TextEditorField::new('obsah', 'Content');
-        yield TextEditorField::new('obsahPokracovani' ,'Article content - continued')->hideOnIndex();
         yield AssociationField::new('stitkies', 'Labels')->setFormTypeOption('by_reference', false)->formatValue(fn($value) => implode('<br>', $value->toArray()));
+        yield TextEditorField::new('obsah', 'Content');
 
         yield Field::new('upload')
             ->setFormType(DropzoneType::class)
@@ -82,8 +81,8 @@ class AkceCrudController extends AbstractCrudController
             ])
             ->onlyOnForms()
             ->setHelp('Content of this field saves automatically.');
-        yield TextField::new('Video', 'Video (YouTube ID)')->hideOnIndex();
-
+        yield TextField::new('Video', 'Video (YouTube ID)')->hideOnIndex()->setHelp('IDs separated by semicolon');
+        yield TextEditorField::new('obsahPokracovani' ,'Article content - continued')->hideOnIndex();
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void

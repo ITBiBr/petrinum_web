@@ -69,9 +69,6 @@ class ClankyCrudController extends AbstractCrudController
         yield BooleanField::new('isZobrazitTitulek', 'Show Title');
         yield TextField::new('url', 'URL')->hideOnForm();
         yield TextEditorField::new('obsah');
-        yield TextField::new('Video', 'Video (YouTube ID)')->hideOnIndex();
-
-        yield TextEditorField::new('obsahPokracovani' ,'Article content - continued')->hideOnIndex();
         yield Field::new('upload')
             ->setFormType(DropzoneType::class)
             ->setFormTypeOptions([
@@ -84,6 +81,8 @@ class ClankyCrudController extends AbstractCrudController
             ])
             ->onlyOnForms()
             ->setHelp('Content of this field saves automatically.');
+        yield TextField::new('Video', 'Video (YouTube ID)')->hideOnIndex()->setHelp('IDs separated by semicolon');
+        yield TextEditorField::new('obsahPokracovani' ,'Article content - continued')->hideOnIndex();
 
     }
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
