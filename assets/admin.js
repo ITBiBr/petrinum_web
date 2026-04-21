@@ -34,6 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             dz.emit("thumbnail", file, response.thumbUrl + '?t=' + Date.now());
 
+            if (file.previewElement) {
+                const input = file.previewElement.querySelector(".dz-filename-input");
+                if (input) {
+                    input.value = response.name;
+                }
+            }
+
             if (response.size && file.previewElement) {
                 const sizeWrapper = file.previewElement.querySelector(".dz-size");
 

@@ -78,8 +78,9 @@ class GalerieUploadController extends AbstractController
         // uložit do DB
         $foto = new Foto();
         $foto->setSoubor('uploads/images/' . $filename);
-        $foto->setNazev($file->getClientOriginalName());
-        $foto->setPosition(0);
+        //$foto->setNazev($file->getClientOriginalName());
+        $foto->setNazev('');
+        $foto->setPosition(100000);
 
         // dynamické přiřazení
         $foto->{$setter}($object);
@@ -89,7 +90,7 @@ class GalerieUploadController extends AbstractController
 
         return $this->json([
             'id' => $foto->getId(),
-            'name' => $filename,
+            'name' => '('.$file->getClientOriginalName().')',
             'url' => '/uploads/images/' . $filename,
             'thumbUrl' => '/uploads/images/thumbs/' . $filename,
             'size' => filesize($finalPath),
