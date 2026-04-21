@@ -1,5 +1,6 @@
 {% extends 'akce/akce.html.twig' %}
-{% block title %}{{ akce.titulek }}{% endblock %}
-{% block content_description %}{{ akce.obsah|striptags|trim }}{% endblock %}
+{% set akce = clanek %}
+{% block title %}{{ clanek.titulek }}{% endblock %}
+{% block content_description %}{{ clanek.obsah|striptags|trim }}{% endblock %}
 {% block date %}{% endblock %}
 {% block perex %}{% endblock %}

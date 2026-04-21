@@ -18,93 +18,90 @@
 {% endblock %}
 
 {% block body %}
-        <div class="row justify-content-center">
-            <div class="col-lg-11 col-12">
-                <div class="row justify-content-center text-center">
-                    <div class="col-xl-6 col-lg-9 col-10 p-3">
-                        <h2 class="text-primary fw-bolder text-uppercase">{{ akce.titulek }}</h2>
-                    </div>
+
+    <div class="row justify-content-center text-center">
+        <div class="col-12">
+            <h2 class="text-primary fw-bolder text-uppercase">{{ akce.titulek }}</h2>
+        </div>
+    </div>
+
+    {% block date %}
+        <div class="row justify-content-center mt-2">
+            <div class="col-lg-8 col-12 text-justify-left">
+                <div class="date-badge py-2 px-3 text-white fw-semibold bg-primary d-inline-block">
+                    {{ akce.datum|date('j. n. Y') }}{% if akce.datumDo %} – {{ akce.datumDo|date('j. n. Y') }}{% endif %}
+
                 </div>
-
-                {% block date %}
-                    <div class="row justify-content-center mt-2">
-                        <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
-                            <div class="date-badge py-2 px-3 text-white fw-semibold bg-primary d-inline-block">
-                                {{ akce.datum|date('j. n. Y') }}{% if akce.datumDo %} – {{ akce.datumDo|date('j. n. Y') }}{% endif %}
-
-                            </div>
-                        </div>
-                    </div>
-                {% endblock %}
-
-
-                {% if firstFoto %}
-
-
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-xl-6 col-lg-9 col-10 text-center">
-                            <a href="{{ asset(firstFoto.soubor) }}" class="glightbox" data-gallery="akce" data-title="{{ firstFoto.nazev }}">
-                                <img class="w-75"
-                                     src="{{ firstFoto.soubor | imagine_filter('ak_full_thumb') }}"
-                                     alt="{{ akce.titulek }}">
-                            </a>
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% block perex %}
-                    {% if akce.Perex %}
-                        <div class="row justify-content-center mt-5">
-                            <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
-                                <strong>{{ akce.perex|raw }}</strong>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endblock %}
-                <div class="row justify-content-center mt-4">
-                    <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
-                        {{ akce.obsah|raw }}
-                    </div>
-                </div>
-                {% if akce.fotos|length > 1 %}
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-xl-6 col-lg-9 col-10">
-                            <div class="gallery-grid">
-                                {% for foto in akce.fotos|slice(1) %}
-                                    <a href="{{ asset(foto.soubor) }}"
-                                       class="glightbox"
-                                       data-gallery="akce"
-                                       data-title="{{ foto.nazev }}">
-
-                                        <img src="{{ foto.soubor | imagine_filter('ak_fotogallery_thumb') }}"
-                                             class="img-fluid">
-                                    </a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-
-
-                {% if akce.video %}
-                    <div class ="row justify-content-center mt-4">
-                        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10 pt-sm-0 pt-2">
-                            <div class="ratio ratio-16x9">
-                                <iframe class = "rounded" src="https://www.youtube.com/embed/{{ akce.video }}" title="{{ akce.titulek }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if akce.obsahPokracovani %}
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-xl-6 col-lg-9 col-10 text-justify-left">
-                            {{ akce.obsahPokracovani|raw }}
-                        </div>
-                    </div>
-                {% endif %}
-
             </div>
         </div>
+    {% endblock %}
+
+
+    {% if firstFoto %}
+
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 col-12 text-center">
+                <a href="{{ asset(firstFoto.soubor) }}" class="glightbox" data-gallery="akce" data-title="{{ firstFoto.nazev }}">
+                    <img class="w-75"
+                         src="{{ firstFoto.soubor | imagine_filter('ak_full_thumb') }}"
+                         alt="{{ akce.titulek }}">
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
+    {% block perex %}
+        {% if akce.Perex %}
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8 col-12 text-justify-left">
+                    <strong>{{ akce.perex|raw }}</strong>
+                </div>
+            </div>
+        {% endif %}
+    {% endblock %}
+    <div class="row justify-content-center mt-4">
+        <div class="col-lg-8 col-12 text-justify-left">
+            {{ akce.obsah|raw }}
+        </div>
+    </div>
+    {% if akce.fotos|length > 1 %}
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 col-12">
+                <div class="gallery-grid">
+                    {% for foto in akce.fotos|slice(1) %}
+                        <a href="{{ asset(foto.soubor) }}"
+                           class="glightbox"
+                           data-gallery="akce"
+                           data-title="{{ foto.nazev }}">
+
+                            <img src="{{ foto.soubor | imagine_filter('ak_fotogallery_thumb') }}"
+                                 class="img-fluid">
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if akce.video %}
+        <div class ="row justify-content-center mt-4">
+            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 col-10 pt-sm-0 pt-2">
+                <div class="ratio ratio-16x9">
+                    <iframe class = "rounded" src="https://www.youtube.com/embed/{{ akce.video }}" title="{{ akce.titulek }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if akce.obsahPokracovani %}
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 col-12 text-justify-left">
+                {{ akce.obsahPokracovani|raw }}
+            </div>
+        </div>
+    {% endif %}
+
 
 {% endblock %}
 {% block stylesheets %}

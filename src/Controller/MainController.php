@@ -17,7 +17,7 @@ final class MainController extends AbstractController
             return new Response('Článek "úvod" byl pravděpodobně odstraněn.');
         return $this->render('clanky/clanek.html.twig', [
             'controller_name' => 'AkceController',
-            'akce' => $clanek,
+            'clanek' => $clanek,
         ]);
     }
 }

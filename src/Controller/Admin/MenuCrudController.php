@@ -22,7 +22,7 @@ class MenuCrudController extends AbstractCrudController
             TextField::new('nazev'),
 
             TextField::new('routeName')
-                ->setHelp('např. homepage nebo product_detail'),
+                ->setHelp('app_homepage'),
 
             CodeEditorField::new('routeParams')
                 ->setLanguage('yaml'),

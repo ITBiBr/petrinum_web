@@ -20,7 +20,7 @@ final class ClankyController extends AbstractController
             throw new NotFoundHttpException();
         return $this->render('clanky/clanek.html.twig', [
             'controller_name' => 'AkceController',
-            'akce' => $clanek,
+            'clanek' => $clanek,
         ]);
     }
 }
