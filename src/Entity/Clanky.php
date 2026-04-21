@@ -51,8 +51,12 @@ class Clanky implements FotoInterface
     #[ORM\OneToMany(targetEntity: Menu::class, mappedBy: 'Clanky')]
     private Collection $menus;
 
+    #[ORM\Column]
+    private ?bool $isZobrazitTitulek = null;
+
     public function __construct()
     {
+        $this->isZobrazitTitulek = true;
         $this->fotos = new ArrayCollection();
         $this->menus = new ArrayCollection();
     }
@@ -178,6 +182,18 @@ class Clanky implements FotoInterface
                 $menu->setClanky(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isZobrazitTitulek(): ?bool
+    {
+        return $this->isZobrazitTitulek;
+    }
+
+    public function setIsZobrazitTitulek(bool $isZobrazitTitulek): static
+    {
+        $this->isZobrazitTitulek = $isZobrazitTitulek;
 
         return $this;
     }

@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -65,6 +66,7 @@ class ClankyCrudController extends AbstractCrudController
 
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('titulek', 'Title');
+        yield BooleanField::new('isZobrazitTitulek', 'Show Title');
         yield TextField::new('url', 'URL')->hideOnForm();
         yield TextEditorField::new('obsah');
         yield TextField::new('Video', 'Video (YouTube ID)')->hideOnIndex();
