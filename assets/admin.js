@@ -61,10 +61,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             `;
 
-                    // 🔥 vlož pod původní velikost
+                    // vlož pod původní velikost
                     sizeWrapper.insertAdjacentElement("afterend", newSize);
                 }
             }
+            reorder();
         });
 
 
@@ -109,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 });
             }
+
         });
 
 
@@ -137,34 +139,44 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         new Sortable(el, {
-            draggable: ".dz-preview", // 🔥 důležité
+            draggable: ".dz-preview",
+            handle: ".dz-details", // 🔥 tahání jen za obrázek
+
+            // zakázat drag z interaktivních prvků
+            filter: ".dz-remove, input",
+            preventOnFilter: false,
+
             animation: 150,
 
             onEnd: () => {
-                // 🔥 tady získáš nové pořadí
-                const order = [];
-
-                el.querySelectorAll(".dz-preview").forEach((preview, index) => {
-                    const file = preview.dropzoneFile;
-
-                    if (file && file.serverId) {
-                        order.push({
-                            id: file.serverId,
-                            position: index
-                        });
-                    }
-                });
-
-                console.log(order);
-
-                // 👉 pošli na backend
-                fetch('/admin/foto/reorder', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(order)
-                });
+                reorder();
             }
         });
+
+        function reorder()
+        {
+            // tady získáš nové pořadí
+            const order = [];
+
+            el.querySelectorAll(".dz-preview").forEach((preview, index) => {
+                const file = preview.dropzoneFile;
+
+                if (file && file.serverId) {
+                    order.push({
+                        id: file.serverId,
+                        position: index
+                    });
+                }
+            });
+
+
+            // 👉 pošli na backend
+            fetch('/admin/foto/reorder', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)
+            });
+        }
     });
 });
 

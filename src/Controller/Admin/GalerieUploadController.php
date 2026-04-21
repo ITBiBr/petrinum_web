@@ -80,7 +80,7 @@ class GalerieUploadController extends AbstractController
         $foto->setSoubor('uploads/images/' . $filename);
         //$foto->setNazev($file->getClientOriginalName());
         $foto->setNazev('');
-        $foto->setPosition(100000);
+        $foto->setPosition(0);
 
         // dynamické přiřazení
         $foto->{$setter}($object);
