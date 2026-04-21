@@ -110,6 +110,8 @@ class DevController
                 $obsah = preg_replace('/\[i\](.*?)\[\/i\]/is', '<i>$1</i>', $obsah);
                 $obsah = preg_replace('/\[b\](.*?)\[\/b\]/is', '<strong>$1</strong>', $obsah);
                 $obsah = preg_replace('/\[u\](.*?)\[\/u\]/is', '<u>$1</u>', $obsah);
+                $obsah = str_replace('\r\n', '<br>', $obsah);
+
                 $item->setObsah($obsah);
             }
 
@@ -117,6 +119,8 @@ class DevController
                 $obsahPokracovani = preg_replace('/\[i\](.*?)\[\/i\]/is', '<i>$1</i>', $obsahPokracovani);
                 $obsahPokracovani = preg_replace('/\[b\](.*?)\[\/b\]/is', '<strong>$1</strong>', $obsahPokracovani);
                 $obsahPokracovani = preg_replace('/\[u\](.*?)\[\/u\]/is', '<u>$1</u>', $obsahPokracovani);
+                $obsahPokracovani = str_replace('\r\n', '<br>', $obsahPokracovani);
+
                 $item->setObsahPokracovani($obsahPokracovani);
             }
         }
