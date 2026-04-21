@@ -27,9 +27,6 @@ class Menu
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $routeName = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?array $routeParams = null;
-
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     private ?self $parent = null;
 
@@ -41,6 +38,9 @@ class Menu
 
     #[ORM\Column]
     private ?int $position = null;
+
+    #[ORM\ManyToOne(inversedBy: 'menus')]
+    private ?Clanky $Clanky = null;
 
     public function __construct()
     {
@@ -72,18 +72,6 @@ class Menu
     public function setRouteName(?string $routeName): static
     {
         $this->routeName = $routeName;
-
-        return $this;
-    }
-
-    public function getRouteParams(): ?array
-    {
-        return $this->routeParams;
-    }
-
-    public function setRouteParams(?array $routeParams): static
-    {
-        $this->routeParams = $routeParams;
 
         return $this;
     }
@@ -138,6 +126,18 @@ class Menu
     public function setPosition(int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getClanky(): ?Clanky
+    {
+        return $this->Clanky;
+    }
+
+    public function setClanky(?Clanky $Clanky): static
+    {
+        $this->Clanky = $Clanky;
 
         return $this;
     }

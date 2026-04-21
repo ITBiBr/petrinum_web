@@ -27,3 +27,12 @@ New Label: 'Nový štítek'
 Edit Label: 'Upravit štítek'
 Label Title: 'Název štítku'
 Date: "Datum"
+Route Name: "Jméno cesty"
+E.g. app_homepage: "Např.:app_homepage"
+Replaces Route Name: "Nahradí jméno cesty"
+Parent Menu: "Nadřazené menu"
+Position: "Pozice"
+Menu Items: "Položky menu"
+Edit Menu Item: "Upravit položku menu"
+N
+

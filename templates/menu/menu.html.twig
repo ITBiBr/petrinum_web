@@ -5,6 +5,15 @@
         {{ _self.render_item(item) }}
     {% endfor %}
 </ul>
+{% macro get_url(item) %}
+    {% if item.Clanky and item.Clanky.url %}
+        {{ path('clanky_url', { url: item.Clanky.url }) }}
+    {% elseif item.routeName %}
+        {{ path(item.routeName) }}
+    {% else %}
+        #
+    {% endif %}
+{% endmacro %}
 
 {% macro render_item(item) %}
     {% if item.children|length > 0 %}
@@ -26,9 +35,7 @@
     {% else %}
         <li class="nav-item">
             <a class="nav-link nav-link-fancy fs-5 fw-bold text-white"
-               href="{{ item.routeName
-               ? path(item.routeName, item.routeParams ?? {})
-               : '#' }}">
+               href="{{ _self.get_url(item) }}">
                 {{ item.nazev }}
             </a>
         </li>
@@ -51,11 +58,16 @@
             </ul>
         </li>
     {% else %}
+        {% set url = '#' %}
+
+        {% if item.Clanky %}
+            {% set url = path('clanky_url', { url: item.Clanky.url }) %}
+        {% elseif item.routeName %}
+            {% set url = path(item.routeName) %}
+        {% endif %}
         <li>
             <a class="dropdown-item"
-               href="{{ item.routeName
-               ? path(item.routeName, item.routeParams ?? {})
-               : '#' }}">
+               href="{{ _self.get_url(item) }}">
                 {{ item.nazev }}
             </a>
         </li>
