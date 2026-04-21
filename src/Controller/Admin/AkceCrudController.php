@@ -80,7 +80,8 @@ class AkceCrudController extends AbstractCrudController
                     'data-entity-id' => $this->getContext()?->getEntity()?->getInstance()?->getId(),
                 ],
             ])
-            ->onlyOnForms();
+            ->onlyOnForms()
+            ->setHelp('Content of this field saves automatically.');
         yield TextField::new('Video', 'Video (YouTube ID)')->hideOnIndex();
 
     }

@@ -82,7 +82,8 @@ class ClankyCrudController extends AbstractCrudController
                     'data-entity-id' => $this->getContext()?->getEntity()?->getInstance()?->getId(),
                 ],
             ])
-            ->onlyOnForms();
+            ->onlyOnForms()
+            ->setHelp('Content of this field saves automatically.');
 
     }
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
