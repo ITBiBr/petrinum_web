@@ -20,7 +20,7 @@ class GalerieUploadController extends AbstractController
     {
 
     }
-    #[Route('/admin/upload-foto/{entity}/{id}', name: 'admin_upload_foto', methods: ['POST'])]
+    #[Route('/admin/upload/foto/upload/{entity}/{id}', name: 'admin_upload_foto_upload', methods: ['POST'])]
     public function upload(
         string $entity,
         int $id,
@@ -99,7 +99,7 @@ class GalerieUploadController extends AbstractController
 
 
 
-    #[Route('/admin/delete-foto/{id}', name: 'admin_delete_foto', methods: ['DELETE'])]
+    #[Route('/admin/upload/foto/remove/{id}', name: 'admin_upload_foto_remove', methods: ['DELETE'])]
     public function delete(Foto $foto, EntityManagerInterface $em): JsonResponse
     {
         $baseDir = $this->getParameter('kernel.project_dir') . '/public/';
@@ -125,7 +125,7 @@ class GalerieUploadController extends AbstractController
     }
 
 
-    #[Route('/admin/{entity}/{id}/foto', name: 'admin_foto_list', methods: ['GET'])]
+    #[Route('/admin/upload/foto/list/{entity}/{id}', name: 'admin_upload_foto_list', methods: ['GET'])]
     public function list(
         string $entity,
         int $id,
@@ -169,7 +169,7 @@ class GalerieUploadController extends AbstractController
         return $this->json($data);
     }
 
-    #[Route('/admin/foto/reorder', name: 'admin_foto_reorder', methods: ['POST'])]
+    #[Route('/admin/upload/foto/reorder', name: 'admin_upload_foto_reorder', methods: ['POST'])]
     public function reorder(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -186,7 +186,7 @@ class GalerieUploadController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    #[Route('/admin/foto/rename/{id}', name: 'admin_foto_rename', methods: ['POST'])]
+    #[Route('/admin/upload/foto/rename{id}', name: 'admin_upload_foto_rename', methods: ['POST'])]
     public function rename(
         Foto $foto,
         Request $request,

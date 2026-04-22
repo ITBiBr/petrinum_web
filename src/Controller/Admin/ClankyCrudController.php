@@ -77,6 +77,25 @@ class ClankyCrudController extends AbstractCrudController
                 'attr' => [
                     'data-entity' => 'clanky',
                     'data-entity-id' => $this->getContext()?->getEntity()?->getInstance()?->getId(),
+                    'data-type' => 'image',
+                    'data-upload-url' => 'admin_upload_foto_upload',
+                    'data-remove-url' => 'admin_upload_foto_remove',
+                    'data-rename-url' => 'admin_upload_foto_rename',
+                    'data-reorder-url' => 'admin_upload_foto_reorder',
+                    'data-list-url' => 'admin_upload_foto_list',
+                ],
+            ])
+            ->onlyOnForms()
+            ->setHelp('Content of this field saves automatically.');
+        yield Field::new('upload_2')
+            ->setFormType(DropzoneType::class)
+            ->setFormTypeOptions([
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'data-entity' => 'clanky',
+                    'data-entity-id' => $this->getContext()?->getEntity()?->getInstance()?->getId(),
+                    'data-type' => 'file',
                 ],
             ])
             ->onlyOnForms()
