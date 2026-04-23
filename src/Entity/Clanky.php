@@ -49,6 +49,7 @@ class Clanky implements FotoInterface, PrilohyInterface
      * @var Collection<int, Menu>
      */
     #[ORM\OneToMany(targetEntity: Menu::class, mappedBy: 'Clanky', cascade: ['remove'], orphanRemoval: true)]
+
     private Collection $menus;
 
     #[ORM\Column]
@@ -58,6 +59,7 @@ class Clanky implements FotoInterface, PrilohyInterface
      * @var Collection<int, Prilohy>
      */
     #[ORM\OneToMany(targetEntity: Prilohy::class, mappedBy: 'Clanky', cascade: ['remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $prilohies;
 
     public function __construct()

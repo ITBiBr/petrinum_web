@@ -119,6 +119,16 @@
             </div>
         </div>
     {% endif %}
+    {% if akce.prilohies is defined  %}
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 col-12 text-justify-left">
+                {% for priloha in akce.prilohies %}
+                    {% set ext = priloha.Soubor|split('.')|last%}
+                    <img src="{{ path('icon_svg', {type:ext}) }}" height="60px"><a href="{{ asset(priloha.Soubor) }}" download="{{priloha.Nazev}}.{{ ext }}">{{priloha.Nazev}}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 
 
 {% endblock %}
