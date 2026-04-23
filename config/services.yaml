@@ -21,7 +21,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Controller\Admin\GalerieUploadController:
+    App\Controller\Admin\UploadController:
         arguments:
             $mapEntity:
                 akce: App\Entity\Akce
@@ -35,3 +35,6 @@ services:
             $mapUploadDir:
                 image: 'images'
                 file: 'files'
+            $mapGetter:
+                image: 'getFotos'
+                file: 'getPrilohies'
