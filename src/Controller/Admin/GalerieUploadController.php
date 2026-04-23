@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class GalerieUploadController extends AbstractController
 {
-    public function __construct(private readonly array $mapEntity, private readonly array $mapSetter, private readonly array $mapFileEntity)
+    public function __construct(private readonly array $mapEntity, private readonly array $mapSetter, private readonly array $mapFileEntity, private readonly array $mapUploadDir)
     {
 
     }
@@ -104,7 +104,7 @@ class GalerieUploadController extends AbstractController
             'url' => 'uploads/'. $uploadDir.'/' . $filename,
         ];
 
-        if ($data_type !== 'image') {
+        if ($data_type == 'image') {
             $response['thumbUrl'] = '/uploads/'. $uploadDir.'/thumbs/' . $filename;
             $response['size'] = filesize($finalPath);
         }

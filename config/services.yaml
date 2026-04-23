@@ -31,5 +31,7 @@ services:
                 clanky: 'setClanky'
             $mapFileEntity:
                 image: App\Entity\Foto
+                file: App\Entity\Prilohy
             $mapUploadDir:
                 image: 'images'
+                file: 'files'

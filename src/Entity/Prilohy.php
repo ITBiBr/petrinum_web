@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\FotoRepository;
+use App\Repository\PrilohyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FotoRepository::class)]
-class Foto
+#[ORM\Entity(repositoryClass: PrilohyRepository::class)]
+class Prilohy
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,12 +22,8 @@ class Foto
     #[ORM\Column]
     private ?int $position = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fotos')]
-    private ?Akce $Akce = null;
-
-    #[ORM\ManyToOne(inversedBy: 'fotos')]
+    #[ORM\ManyToOne(inversedBy: 'prilohies')]
     private ?Clanky $Clanky = null;
-
 
     public function getId(): ?int
     {
@@ -70,18 +66,6 @@ class Foto
         return $this;
     }
 
-    public function getAkce(): ?Akce
-    {
-        return $this->Akce;
-    }
-
-    public function setAkce(?Akce $Akce): static
-    {
-        $this->Akce = $Akce;
-
-        return $this;
-    }
-
     public function getClanky(): ?Clanky
     {
         return $this->Clanky;
@@ -93,7 +77,4 @@ class Foto
 
         return $this;
     }
-
-
-
 }

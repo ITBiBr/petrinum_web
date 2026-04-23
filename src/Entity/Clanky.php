@@ -54,11 +54,18 @@ class Clanky implements FotoInterface
     #[ORM\Column]
     private ?bool $isZobrazitTitulek = null;
 
+    /**
+     * @var Collection<int, Prilohy>
+     */
+    #[ORM\OneToMany(targetEntity: Prilohy::class, mappedBy: 'Clanky')]
+    private Collection $prilohies;
+
     public function __construct()
     {
         $this->isZobrazitTitulek = true;
         $this->fotos = new ArrayCollection();
         $this->menus = new ArrayCollection();
+        $this->prilohies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +201,36 @@ class Clanky implements FotoInterface
     public function setIsZobrazitTitulek(bool $isZobrazitTitulek): static
     {
         $this->isZobrazitTitulek = $isZobrazitTitulek;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prilohy>
+     */
+    public function getPrilohies(): Collection
+    {
+        return $this->prilohies;
+    }
+
+    public function addPrilohy(Prilohy $prilohy): static
+    {
+        if (!$this->prilohies->contains($prilohy)) {
+            $this->prilohies->add($prilohy);
+            $prilohy->setClanky($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrilohy(Prilohy $prilohy): static
+    {
+        if ($this->prilohies->removeElement($prilohy)) {
+            // set the owning side to null (unless already changed)
+            if ($prilohy->getClanky() === $this) {
+                $prilohy->setClanky(null);
+            }
+        }
 
         return $this;
     }
