@@ -26,6 +26,10 @@ services:
             $mapEntity:
                 akce: App\Entity\Akce
                 clanky: App\Entity\Clanky
-            $mapFotoSetter:
+            $mapSetter:
                 akce: 'setAktuality'
                 clanky: 'setClanky'
+            $mapFileEntity:
+                image: App\Entity\Foto
+            $mapUploadDir:
+                image: 'images'

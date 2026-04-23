@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 
-use App\Entity\Akce;
+
 use App\Entity\Foto;
 use App\Entity\FotoInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,13 +16,16 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class GalerieUploadController extends AbstractController
 {
-    public function __construct(private readonly array $mapEntity, private readonly array $mapFotoSetter)
+    public function __construct(private readonly array $mapEntity, private readonly array $mapSetter, private readonly array $mapFileEntity)
     {
 
     }
-    #[Route('/admin/upload/foto/upload/{entity}/{id}', name: 'admin_upload_foto_upload', methods: ['POST'])]
+
+
+    #[Route('/admin/upload/{data_type}/upload/{entity}/{id}', name: 'admin_upload_upload', methods: ['POST'])]
     public function upload(
         string $entity,
+        string $data_type,
         int $id,
         Request $request,
         EntityManagerInterface $em
@@ -34,9 +37,11 @@ class GalerieUploadController extends AbstractController
         }
 
         $class = $this->mapEntity[$entity] ?? null;
-        $setter = $this->mapFotoSetter[$entity] ?? null;
+        $setter = $this->mapSetter[$entity] ?? null;
+        $fileEntity = $this->mapFileEntity[$data_type] ?? null;
+        $uploadDir = $this->mapUploadDir[$data_type] ?? 'files';
 
-        if (!$class || !$setter) {
+        if (!$class || !$setter || !$fileEntity) {
             return $this->json(['error' => 'Unknown entity'], 400);
         }
 
@@ -48,15 +53,18 @@ class GalerieUploadController extends AbstractController
         }
 
         // ===== FILE SYSTEM =====
-        $baseDir = $this->getParameter('kernel.project_dir') . '/public/uploads/images';
-        $thumbDir = $baseDir . '/thumbs';
+        $baseDir = $this->getParameter('kernel.project_dir') . '/public/uploads/'.$uploadDir;
 
         if (!is_dir($baseDir)) {
             mkdir($baseDir, 0777, true);
         }
 
-        if (!is_dir($thumbDir)) {
-            mkdir($thumbDir, 0777, true);
+        if ($data_type == 'image') {
+            $thumbDir = $baseDir . '/thumbs';
+
+            if (!is_dir($thumbDir)) {
+                mkdir($thumbDir, 0777, true);
+            }
         }
 
         $filename = bin2hex(random_bytes(8)) . '.' . $file->guessExtension();
@@ -64,42 +72,49 @@ class GalerieUploadController extends AbstractController
         $file->move($baseDir, $filename);
         $finalPath = $baseDir . '/' . $filename;
 
-        // zmenšit originál a vytvořit thumbnail
-        $manager = new ImageManager(new Driver());
+        if ($data_type == 'image') {
+            // zmenšit originál a vytvořit thumbnail
+            $manager = new ImageManager(new Driver());
 
-        $manager->read($finalPath)
-            ->scaleDown(2000, 2000)
-            ->save($finalPath);
+            $manager->read($finalPath)
+                ->scaleDown(2000, 2000)
+                ->save($finalPath);
 
-        $manager->read($finalPath)
-            ->scaleDown(200, 200)
-            ->save($thumbDir . '/' . $filename);
+            $manager->read($finalPath)
+                ->scaleDown(200, 200)
+                ->save($thumbDir . '/' . $filename);
+        }
 
         // uložit do DB
-        $foto = new Foto();
-        $foto->setSoubor('uploads/images/' . $filename);
+        $new_file = new $fileEntity;
+        $new_file->setSoubor('uploads/'. $uploadDir.'/' . $filename);
         //$foto->setNazev($file->getClientOriginalName());
-        $foto->setNazev('');
-        $foto->setPosition(0);
+        $new_file->setNazev('');
+        $new_file->setPosition(0);
 
         // dynamické přiřazení
-        $foto->{$setter}($object);
+        $new_file->{$setter}($object);
 
-        $em->persist($foto);
+        $em->persist($new_file);
         $em->flush();
 
-        return $this->json([
-            'id' => $foto->getId(),
-            'name' => '('.$file->getClientOriginalName().')',
-            'url' => '/uploads/images/' . $filename,
-            'thumbUrl' => '/uploads/images/thumbs/' . $filename,
-            'size' => filesize($finalPath),
-        ]);
+        $response = [
+            'id' => $new_file->getId(),
+            'name' => '(' . $file->getClientOriginalName() . ')',
+            'url' => 'uploads/'. $uploadDir.'/' . $filename,
+        ];
+
+        if ($data_type !== 'image') {
+            $response['thumbUrl'] = '/uploads/'. $uploadDir.'/thumbs/' . $filename;
+            $response['size'] = filesize($finalPath);
+        }
+
+        return $this->json($response);
     }
 
 
 
-    #[Route('/admin/upload/foto/remove/{id}', name: 'admin_upload_foto_remove', methods: ['DELETE'])]
+    #[Route('/admin/upload/{data_type}/remove/{id}', name: 'admin_upload_remove', methods: ['DELETE'])]
     public function delete(Foto $foto, EntityManagerInterface $em): JsonResponse
     {
         $baseDir = $this->getParameter('kernel.project_dir') . '/public/';
@@ -125,7 +140,7 @@ class GalerieUploadController extends AbstractController
     }
 
 
-    #[Route('/admin/upload/foto/list/{entity}/{id}', name: 'admin_upload_foto_list', methods: ['GET'])]
+    #[Route('/admin/upload/{data_type}/list/{entity}/{id}', name: 'admin_upload_list', methods: ['GET'])]
     public function list(
         string $entity,
         int $id,
@@ -169,7 +184,7 @@ class GalerieUploadController extends AbstractController
         return $this->json($data);
     }
 
-    #[Route('/admin/upload/foto/reorder', name: 'admin_upload_foto_reorder', methods: ['POST'])]
+    #[Route('/admin/upload/{data_type}/reorder', name: 'admin_upload_reorder', methods: ['POST'])]
     public function reorder(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -186,7 +201,7 @@ class GalerieUploadController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    #[Route('/admin/upload/foto/rename{id}', name: 'admin_upload_foto_rename', methods: ['POST'])]
+    #[Route('/admin/upload/{data_type}/rename/{id}', name: 'admin_upload_rename', methods: ['POST'])]
     public function rename(
         Foto $foto,
         Request $request,
