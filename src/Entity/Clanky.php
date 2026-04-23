@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ClankyRepository::class)]
-class Clanky implements FotoInterface
+class Clanky implements FotoInterface, PrilohyInterface
 {
     public function __toString(): string
     {
@@ -48,7 +48,7 @@ class Clanky implements FotoInterface
     /**
      * @var Collection<int, Menu>
      */
-    #[ORM\OneToMany(targetEntity: Menu::class, mappedBy: 'Clanky')]
+    #[ORM\OneToMany(targetEntity: Menu::class, mappedBy: 'Clanky', cascade: ['remove'], orphanRemoval: true)]
     private Collection $menus;
 
     #[ORM\Column]
@@ -57,7 +57,7 @@ class Clanky implements FotoInterface
     /**
      * @var Collection<int, Prilohy>
      */
-    #[ORM\OneToMany(targetEntity: Prilohy::class, mappedBy: 'Clanky')]
+    #[ORM\OneToMany(targetEntity: Prilohy::class, mappedBy: 'Clanky', cascade: ['remove'], orphanRemoval: true)]
     private Collection $prilohies;
 
     public function __construct()

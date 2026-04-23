@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\FotoInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
@@ -167,10 +166,6 @@ class UploadController extends AbstractController
 
         if (!$object) {
             return $this->json([]);
-        }
-
-        if (!$object instanceof FotoInterface) {
-            return $this->json(['error' => 'Entita nepodporuje fotky'], 400);
         }
         $getter = $this->mapGetter[$data_type];
         $files = $object->$getter();
