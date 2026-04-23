@@ -69,7 +69,7 @@ class ClankyCrudController extends AbstractCrudController
         yield BooleanField::new('isZobrazitTitulek', 'Show Title');
         yield TextField::new('url', 'URL')->hideOnForm();
         yield TextEditorField::new('obsah');
-        yield Field::new('upload')
+        yield Field::new('upload', 'Photo')
             ->setFormType(DropzoneType::class)
             ->setFormTypeOptions([
                 'mapped' => false,
@@ -82,7 +82,7 @@ class ClankyCrudController extends AbstractCrudController
             ])
             ->onlyOnForms()
             ->setHelp('Content of this field saves automatically.');
-        yield Field::new('upload_2')
+        yield Field::new('upload_2', 'Attachments')
             ->setFormType(DropzoneType::class)
             ->setFormTypeOptions([
                 'mapped' => false,

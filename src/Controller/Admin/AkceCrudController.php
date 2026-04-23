@@ -69,7 +69,7 @@ class AkceCrudController extends AbstractCrudController
         yield AssociationField::new('stitkies', 'Labels')->setFormTypeOption('by_reference', false)->formatValue(fn($value) => implode('<br>', $value->toArray()));
         yield TextEditorField::new('obsah', 'Content');
 
-        yield Field::new('upload')
+        yield Field::new('upload', 'Photo')
             ->setFormType(DropzoneType::class)
             ->setFormTypeOptions([
                 'mapped' => false,
@@ -77,6 +77,7 @@ class AkceCrudController extends AbstractCrudController
                 'attr' => [
                     'data-entity' => 'akce',
                     'data-entity-id' => $this->getContext()?->getEntity()?->getInstance()?->getId(),
+                    'data-type' => 'image',
                 ],
             ])
             ->onlyOnForms()
