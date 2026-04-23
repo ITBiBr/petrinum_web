@@ -24,7 +24,7 @@ export function createDropzone(el, options = {}) {
     dz.on("success", (file, response) => {
         file.serverId = response.id;
 
-        dz.emit("thumbnail", file, response.thumbUrl + '?t=' + Date.now());
+        dz.emit("thumbnail", file, response.thumbUrl);
 
         if (file.previewElement) {
             const input = file.previewElement.querySelector(".dz-filename-input");
