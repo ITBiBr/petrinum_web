@@ -14,7 +14,7 @@ final class FileTypeSvgController extends AbstractController
         $type = strtoupper($type);
 
         $svg = <<<SVG
-                <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <svg width="120" height="120" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14 2h24l12 12v48H14z" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
                     <path d="M38 2v12h12" fill="#e0e0e0" stroke="#333" stroke-width="2"/>
                     <text x="32" y="40" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333">

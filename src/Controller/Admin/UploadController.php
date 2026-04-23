@@ -86,7 +86,12 @@ class UploadController extends AbstractController
         $new_file = new $config['fileEntity'];
         $new_file->setSoubor('uploads/'. $config['uploadDir'].'/' . $filename);
         //$foto->setNazev($file->getClientOriginalName());
-        $new_file->setNazev('');
+        if ($data_type == 'image') {
+            $new_file->setNazev('');
+        }
+        else {
+            $new_file->setNazev($file->getClientOriginalName());
+        }
         $new_file->setPosition(0);
 
         // dynamické přiřazení
@@ -106,7 +111,10 @@ class UploadController extends AbstractController
             $response['size'] = filesize($finalPath);
         }
         else{
-            $response['thumbUrl'] = '/icon/'. $file->guessExtension();
+
+            $ext = strtolower(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
+            $response['thumbUrl'] = $this->generateUrl('icon_svg', [
+                'type' => $ext]);
         }
 
         return $this->json($response);
@@ -186,6 +194,12 @@ class UploadController extends AbstractController
 
             if ($data_type === 'image') {
                 $item['thumbUrl'] = '/uploads/'.$this->mapUploadDir[$data_type].'/thumbs/' . basename($path);
+            }
+            else
+            {
+                $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+                $item['thumbUrl'] = $this->generateUrl('icon_svg', [
+                    'type' => $ext]);
             }
 
             $data[] = $item;
