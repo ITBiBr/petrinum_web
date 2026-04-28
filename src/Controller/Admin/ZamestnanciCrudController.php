@@ -28,7 +28,8 @@ class ZamestnanciCrudController extends AbstractCrudController
         return $crud->addFormTheme('admin/form/dropzone_theme.html.twig')
             ->setPageTitle('new', 'New employee')
             ->setPageTitle('edit', 'Edit employee')
-            ->setPageTitle('index', 'Employees');
+            ->setPageTitle('index', 'Employees')
+            ->setDefaultSort(['ZamestnanciKategorie.poradi' => 'ASC', 'poradi' => 'ASC']);
     }
     public function configureActions(Actions $actions): Actions
     {
