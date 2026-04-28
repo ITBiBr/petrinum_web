@@ -48,14 +48,14 @@ class ZamestnanciCrudController extends AbstractCrudController
         if (!$this->security->isGranted('ROLE_EDITOR'))
             throw new AccessDeniedException('Access Denied');
         yield TextField::new('jmeno', 'Name');
+        yield TextField::new('role', 'Role');
         yield AssociationField::new('ZamestnanciKategorie', 'Category');
         yield ImageField::new('Foto', 'Photo')
             ->setBasePath('images/zamestnanci')
             ->setUploadDir('public/images/zamestnanci')
             ->setFormTypeOption('multiple', false)
             ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]')
-            ->setFormTypeOption('required', $pageName === Crud::PAGE_NEW)
-            ->setFormTypeOption('allow_delete', false)
+
             ->setSortable(false);
         yield IntegerField::new('poradi', 'Order');
     }

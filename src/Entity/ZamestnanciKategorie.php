@@ -30,6 +30,7 @@ class ZamestnanciKategorie
      * @var Collection<int, Zamestnanci>
      */
     #[ORM\OneToMany(targetEntity: Zamestnanci::class, mappedBy: 'ZamestnanciKategorie')]
+    #[ORM\OrderBy(['poradi' => 'ASC'])]
     private Collection $zamestnancis;
 
     public function __construct()
