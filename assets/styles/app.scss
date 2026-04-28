@@ -1,7 +1,7 @@
 // customize some Bootstrap variables
 
-$primary: rgb(64, 124, 158);
-$body-secondary-bg: rgb(64, 124, 158);
+$primary: rgb(28 87 155);
+$body-secondary-bg: rgb(28 87 155);
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
@@ -28,12 +28,13 @@ body {
     border-radius: 0; /* hranaté */
     border: none;
 
-    background: rgb(31, 93, 129); /* tmavě modrá */
+    background: rgb(28 87 155); /* tmavě modrá */
     backdrop-filter: blur(6px); /* jemný moderní efekt */
 
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     padding: 0.5rem 0;
     z-index: 2100;
+    overflow: hidden;
 }
 .dropdown-item {
     color: #fff;
@@ -198,7 +199,7 @@ body {
     position: absolute;
     top: 8px;
     left: 8px;
-    background: rgb(64, 124, 158);
+    background: rgb(28 87 155);
     color: #fff;
     font-size: 0.75rem;
     padding: 4px 8px;
