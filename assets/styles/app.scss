@@ -20,28 +20,9 @@ body {
 
 
 /* gradient vrstva */
-.navbar-wrapper::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    margin-top: -120px;
-
-    background: linear-gradient(342deg, #04486f, #84b6d1);
-
-    mask-image: linear-gradient(
-            to bottom,
-            transparent 0px,
-            black 120px,
-            black calc(100% - 8px),
-            transparent 100%
-    );
-
-    z-index: 0;
+.navbar-wrapper{
+    background: linear-gradient(61deg, #1690d7, #032562);
 }
-
-
-
-
 
 .dropdown-menu {
     border-radius: 0; /* hranaté */
@@ -70,18 +51,12 @@ body {
 }
 
 .footer-wrapper {
-    padding-top: 120px;
+    padding-top: 20px;
     position: relative;
     top: 0px;
 
-    background: linear-gradient(342deg, #04486f, #84b6d1);
+    background: linear-gradient(61deg, #1690d7, #032562);
 
-
-    mask-image: linear-gradient(
-            to bottom,
-            transparent 0px,
-            black 180px
-    );
 }
 
 /* Stylované odkazy */
@@ -106,16 +81,34 @@ body {
 
 /* Vyšší navbar díky logu */
 .navbar-logo {
-    height: 190px;          /* můžeš upravit podle loga */
+    height: 130px;          /* můžeš upravit podle loga */
     width: auto;
+    padding-right: 20px;
+}
+.custom-navbar{
+    position:relative;
+    bottom:60px;
 }
 
 @media (max-width: 768px) {
     .navbar-logo {
-        height: 50px;
+        height: 65px;
+        padding-right: 4px;
     }
     .budova {
         height: 170px;
+    }
+    .custom-container{
+        margin-bottom: -60px;
+    }
+}
+@media (max-width: 1200px) {
+    .custom-container {
+        margin-bottom: -22px;
+    }
+    .custom-navbar{
+        position:relative;
+        bottom:40px;
     }
 }
 
@@ -123,6 +116,7 @@ body {
 {
     padding-bottom: 0.5rem
 }
+
 
 /* Odkazy v menu trochu vyšší */
 .nav-link-fancy {

@@ -22,7 +22,7 @@
 <header class="navbar-wrapper">
 
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container align-items-end">
+        <div class="container align-items-end custom-container">
 
             <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ path('app_main') }}">
 
@@ -35,12 +35,12 @@
 
             </a>
 
-            <button class="navbar-toggler custom-toggler collapsed ms-auto mb-lg-0 mb-3" type="button"
+            <button class="navbar-toggler custom-toggler collapsed ms-auto mb-lg-0 mb-3 custom-navbar" type="button"
                     data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                 <span class="toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse align-items-end" id="mainNavbar">
+            <div class="collapse navbar-collapse align-items-end custom-navbar" id="mainNavbar">
                 {{ render(controller('App\\Controller\\MenuController::menu')) }}
 
 
@@ -68,12 +68,9 @@
 
 {# ====================== PATIČKA ====================== #}
 <div class="footer-wrapper">
-    <footer class="py-3 mt-auto">
-        <div class="container text-center text-white small pt-5">
+    <footer class="py-2 mt-auto">
+        <div class="container text-center text-white small py-3">
             © {{ "now"|date("Y") }} Petrinum
-        </div>
-        <div class="container text-center text-white small mb-5">
-            Další text patičky
         </div>
     </footer>
 </div>
