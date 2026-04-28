@@ -4,6 +4,7 @@ namespace App\EventListener;
 
 use App\Entity\FotoInterface;
 use App\Entity\PrilohyInterface;
+use App\Entity\Zamestnanci;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 
@@ -16,7 +17,8 @@ final class FileDeleteListener
 
         if (
             !$entity instanceof FotoInterface &&
-            !$entity instanceof PrilohyInterface
+            !$entity instanceof PrilohyInterface &&
+            !$entity instanceof Zamestnanci
         ) {
             return;
         }
@@ -36,6 +38,10 @@ final class FileDeleteListener
             foreach ($entity->getPrilohies() as $file) {
                 $this->deleteFile($baseDir . $file->getSoubor());
             }
+        }
+
+        if ($entity instanceof Zamestnanci) {
+                $this->deleteFile($baseDir . 'images/zamestnanci/'.$entity->getFoto());
         }
     }
 
