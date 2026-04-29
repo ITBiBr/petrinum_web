@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}{% if not probehle %}Akce{% else %}Archiv akcí{% endif %}{% endblock %}
+{% set titulek = probehle ? 'Archiv akcí' : 'Akce' %}
+{% block title %}{{ titulek }}{% endblock %}
 
 {% block body %}
     <div class="row justify-content-center mt-2">
         <div class="col-12 text-center">
-            <h2 class="text-primary fw-bolder text-uppercase">{% if not probehle %}Akce{% else %}Archiv akcí{% endif %}</h2>
+            <h2 class="text-primary fw-bolder text-uppercase"></h2>
         </div>
     </div>
     {% if stitky is not empty %}
@@ -14,13 +14,13 @@
                 <div class="d-flex flex-wrap gap-1 justify-content-start">
                     {% if aktivniStitek %}
                         <a href="{% if not mesicni %}{% if probehle %}{{ path('app_archiv_akci') }}{% else %}{{ path('app_akce') }}{% endif %}{% else %}{{ path('app_archiv_akci_mesic', {rok: rok, mesic:mesic}) }}{% endif %}"
-                           class="btn btn-sm btn-secondary rounded-0 px-4 border-2 mb-2 mx-1">
+                           class="btn btn-sm btn-outline-dark rounded-decently px-4 border-2 mb-2 mx-1">
                             Bez výběru štítku
                         </a>
                     {% endif %}
                     {% for stitek in stitky %}
                         <a href="{% if not mesicni %}{% if probehle %}{{ path('app_archiv_akci', {stitek: stitek.url}) }}{% else %}{{ path('app_akce', {stitek: stitek.url}) }}{% endif %}{% else %}{{ path('app_archiv_akci_mesic', {rok: rok, mesic:mesic,stitek: stitek.url}) }}{% endif %}"
-                           class="btn btn-sm {% if aktivniStitek and aktivniStitek.id == stitek.id %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-0 px-4 border-2 mb-2 mx-1">
+                           class="btn btn-sm {% if aktivniStitek and aktivniStitek.id == stitek.id %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-decently px-4 border-2 mb-2 mx-1">
                             {{ stitek }}
                         </a>
                     {% endfor %}
@@ -43,7 +43,7 @@
     {% if (hasMore) %}
         <div class="text-center mt-4">
             <button id="load-more"
-                    class="btn btn-primary"
+                    class="btn btn-primary rounded-decently"
                     data-url="{% if not mesicni %}{% if not probehle %}{{ path('app_akce_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% else %}{{ path('app_archiv_akci_load_more', { stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% endif %}{% else %}{{ path('app_archiv_akci_load_more_mesic', { mesic: mesic, rok: rok, stitek: aktivniStitek ? aktivniStitek.url : '' }) }}{% endif %}"
                     data-offset="{{ limit }}"
                     data-limit="{{ limit }}">

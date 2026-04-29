@@ -60,7 +60,23 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-12">
-                {% block body %}{% endblock %}
+                {% block titulek %}
+                    {% if titulek is defined %}
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 text-center">
+                                <div class="py-4">
+
+                                    <h1 class="text-primary mb-2">
+                                        {{ titulek }}
+                                    </h1>
+                                    <div class="mx-auto heading-line"></div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% block body %}
+                {% endblock %}
             </div>
         </div>
     </div>

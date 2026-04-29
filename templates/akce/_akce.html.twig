@@ -1,16 +1,16 @@
 <div class="col-12 col-md-6 col-lg-4 mb-4">
     <a href="{{ path('akce_url', { url: ak.url }) }}" class="text-decoration-none text-dark">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm rounded-decently">
 
 
             <div class="position-relative">
                 {% if ak.fotos|length > 0 %}
                     <img src="{{ asset(ak.fotos|first.soubor) |imagine_filter('ak_thumb') }}"
-                         class="card-img-top"
+                         class="card-img-top rounded-decently"
                          alt="{{ ak.titulek }}">
                 {% endif %}
 
-                <span class="akce-datum">
+                <span class="akce-datum rounded-very-decently">
                     {{ ak.datum|date('j. n. Y') }}
                     {% if ak.datumDo %} - {{ ak.datumDo|date('j. n. Y') }}{% endif %}
                 </span>
@@ -28,7 +28,7 @@
 
                 <div class="mt-auto mb-3">
                     {% for stitek in ak.stitkies %}
-                        <span class="badge bg-primary rounded-0 me-1">{{ stitek }}</span>
+                        <span class="badge bg-primary rounded-very-decently me-1">{{ stitek }}</span>
                     {% endfor %}
                 </div>
 
