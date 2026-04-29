@@ -13,9 +13,11 @@ body {
 
 .budova {
     width: 100%;
-    height: 300px;
+    height: 180px;
     object-fit: cover;
+    object-position: top;
     display: block;
+    background: #0a53be;
 }
 
 
@@ -25,7 +27,7 @@ body {
 }
 
 .dropdown-menu {
-    border-radius: 0; /* hranaté */
+    border-radius: 0.15rem;
     border: none;
 
     background: rgb(28 87 155); /* tmavě modrá */
@@ -38,6 +40,7 @@ body {
 }
 .dropdown-item {
     color: #fff;
+    border-radius: 0.1rem;
     padding: 0.6rem 1.2rem;
     transition: all 0.2s ease;
 }
@@ -82,13 +85,13 @@ body {
 
 /* Vyšší navbar díky logu */
 .navbar-logo {
-    height: 130px;          /* můžeš upravit podle loga */
+    height: 95px;          /* můžeš upravit podle loga */
     width: auto;
     padding-right: 20px;
 }
 .custom-navbar{
     position:relative;
-    bottom:60px;
+    bottom:27px;
 }
 
 @media (max-width: 768px) {
@@ -97,21 +100,14 @@ body {
         padding-right: 4px;
     }
     .budova {
-        height: 170px;
+        height: 110px;
     }
-    .custom-container{
-        margin-bottom: -60px;
-    }
-}
-@media (max-width: 1200px) {
-    .custom-container {
-        margin-bottom: -22px;
-    }
+
     .custom-navbar{
-        position:relative;
-        bottom:40px;
+        bottom:0px;
     }
 }
+
 
 .navbar-nav
 {
