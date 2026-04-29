@@ -93,11 +93,7 @@ body {
     position:relative;
     bottom:27px;
 }
-/* hlavní dropdown otevřít na hover */
-.navbar .dropdown:hover > .dropdown-menu {
-    display: block;
-    margin-top: 0;
-}
+
 
 @media (max-width: 768px) {
     .navbar-logo {
