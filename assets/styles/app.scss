@@ -20,12 +20,15 @@ body {
     display: block;
     background: #0a53be;
 }
-h1,h2 {
+h1,h2,h3 {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     font-style: normal;
+    color: #2962c7;
 }
-
+a{
+    text-decoration: none;
+}
 /* gradient vrstva */
 .navbar-wrapper{
     background: linear-gradient(61deg, #1690d7, #032562);
