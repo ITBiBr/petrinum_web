@@ -63,7 +63,6 @@ a{
 }
 
 .footer-wrapper {
-    padding-top: 20px;
     position: relative;
     top: 0px;
 
@@ -97,9 +96,10 @@ a{
     width: auto;
     padding-right: 20px;
 }
-.custom-navbar{
-    position:relative;
-    bottom:27px;
+.custom-navbar {
+    position: relative;
+    top: 50%;
+    transform: translateY(-26px);
 }
 .line{
     width: 75%;
@@ -115,8 +115,12 @@ a{
         height: 110px;
     }
 
-    .custom-navbar{
-        bottom:0px;
+}
+
+@media (max-width: 991.98px) {
+    .custom-navbar {
+        top: 0;
+        transform: none;
     }
 }
 
