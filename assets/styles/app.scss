@@ -101,6 +101,20 @@ a{
     top: 50%;
     transform: translateY(-26px);
 }
+.title-wrapper {
+    width: fit-content; /* přizpůsobí se obsahu */
+}
+html, body {
+    overflow-x: hidden;
+}
+.title-line{
+    width: 150%;
+    height: 4px;
+    background: #2962c7; border-radius: 3px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
 .line{
     width: 75%;
     height: 4px;

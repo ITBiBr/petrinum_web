@@ -63,16 +63,15 @@
                 {% block titulek %}
                     {% if titulek is defined %}
                         <div class="row justify-content-center">
-                            <div class="col-lg-8 text-center">
-                                <div class="py-4">
+                            <div class="col-lg-6 col-md-8 col-12 text-center">
 
-                                    <h1 class="text-primary mb-2">
-                                        {{ titulek }}
-                                    </h1>
-                                    <div class="mx-auto line"></div>
+                                <div class="title-wrapper d-inline-block">
+                                    <h1 class="text-primary mb-2">{{ titulek }}</h1>
+                                    <div class="mx-auto title-line"></div>
                                 </div>
                             </div>
                         </div>
+
                     {% endif %}
                 {% endblock %}
                 {% block body %}
