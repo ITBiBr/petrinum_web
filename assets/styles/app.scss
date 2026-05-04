@@ -1,7 +1,7 @@
 // customize some Bootstrap variables
 
-$primary: #2962c7;
-$body-secondary-bg: rgb(28 87 155);
+$primary: #032562;
+$body-secondary-bg: #032562;
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
@@ -18,13 +18,13 @@ body {
     object-fit: cover;
     object-position: top;
     display: block;
-    background: #0a53be;
+    background: linear-gradient(61deg, #1690d7, #032562);
 }
 h1,h2,h3 {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     font-style: normal;
-    color: #2962c7;
+    color: #032562;
 }
 a{
     text-decoration: none;
@@ -38,7 +38,7 @@ a{
     border-radius: 0.15rem;
     border: none;
 
-    background: rgb(28 87 155); /* tmavě modrá */
+    background: rgb(28 87 159); /* tmavě modrá */
     backdrop-filter: blur(6px); /* jemný moderní efekt */
 
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
@@ -53,13 +53,9 @@ a{
     transition: all 0.2s ease;
 }
 .dropdown-item:hover {
-    background: rgba(132, 182, 209, 0.2); /* světle modrá z gradientu */
+    background: rgba(22, 144, 215, 0.2); /* světle modrá z gradientu */
     color: #fff;
     transform: translateX(4px);
-}
-.dropdown-item.active {
-    background: rgba(132, 182, 209, 0.35);
-    font-weight: 600;
 }
 
 .footer-wrapper {
@@ -110,7 +106,7 @@ html, body {
 .title-line{
     width: 150%;
     height: 4px;
-    background: #2962c7; border-radius: 3px;
+    background: #032562; border-radius: 3px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -118,7 +114,7 @@ html, body {
 .line{
     width: 75%;
     height: 4px;
-    background: #2962c7; border-radius: 3px;
+    background: #032562; border-radius: 3px;
 }
 @media (max-width: 768px) {
     .navbar-logo {
@@ -231,7 +227,7 @@ html, body {
     position: absolute;
     top: 8px;
     left: 8px;
-    background: rgb(28 87 155);
+    background: #032562;
     color: #fff;
     font-size: 0.75rem;
     padding: 4px 8px;
