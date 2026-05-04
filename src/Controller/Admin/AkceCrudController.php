@@ -34,7 +34,8 @@ class AkceCrudController extends AbstractCrudController
         return $crud->addFormTheme('admin/form/dropzone_theme.html.twig')
             ->setPageTitle('new', 'New event')
             ->setPageTitle('edit', 'Edit event')
-            ->setPageTitle('index', 'Events');
+            ->setPageTitle('index', 'Events')
+            ->setDefaultSort(['datum' => 'DESC']);
     }
     public function configureActions(Actions $actions): Actions
     {

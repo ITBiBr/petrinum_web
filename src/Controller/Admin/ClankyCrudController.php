@@ -64,7 +64,6 @@ class ClankyCrudController extends AbstractCrudController
         if (!$this->security->isGranted('ROLE_EDITOR'))
             throw new AccessDeniedException('Access Denied');
 
-        yield IdField::new('id')->hideOnForm();
         yield TextField::new('titulek', 'Title');
         yield BooleanField::new('isZobrazitTitulek', 'Show Title');
         yield TextField::new('url', 'URL')->hideOnForm();
