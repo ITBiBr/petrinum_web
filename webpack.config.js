@@ -27,6 +27,7 @@ Encore
     .addEntry('load-more_js', './assets/load-more.js')
     .addEntry('fotogalerie_js', './assets/fotogalerie.js')
     .addStyleEntry('fotogalerie','./assets/styles/fotogalerie.scss')
+    .addEntry('hledani_js', './assets/hledani.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

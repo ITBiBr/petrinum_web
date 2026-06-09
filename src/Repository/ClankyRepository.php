@@ -40,4 +40,16 @@ class ClankyRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function search(string $term, int $limit = 10): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.titulek LIKE :term')
+            ->orWhere('a.obsah LIKE :term')
+            ->orWhere('a.obsahPokracovani LIKE :term')
+            ->setParameter('term', '%' . $term . '%')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

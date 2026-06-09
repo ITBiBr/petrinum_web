@@ -7,6 +7,11 @@ framework:
 
     #esi: true
     #fragments: true
+    rate_limiter:
+        search:
+            policy: 'fixed_window'
+            limit: 120
+            interval: '1 minute'
 
 when@test:
     framework:
