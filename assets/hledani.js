@@ -45,4 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
         input.focus();
     });
 
+    // 🔥 zavření search při otevření dropdownu
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+        dropdown.addEventListener('show.bs.dropdown', () => {
+            box.classList.add('d-none');
+            box.classList.remove('open');
+        });
+    });
 });
