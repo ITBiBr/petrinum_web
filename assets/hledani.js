@@ -16,11 +16,12 @@ input.addEventListener('input', async () => {
 
     data.forEach(item => {
         const li = document.createElement('li');
-
+        li.classList.add(item.type);
         li.innerHTML = `
-        <a href="${item.url}">
-            <span>${item.title}</span>
-        </a>
+         <a href="${item.url}">
+        ${item.type === 'clanek' ? '<strong>' + item.title + '</strong>' : item.title}
+        ${item.date ? `<span><strong> (${item.date})</span></strong>` : ''}
+         </a>
         `;
 
 

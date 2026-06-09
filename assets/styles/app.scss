@@ -275,8 +275,14 @@ html, body {
     background: #f8f9fa;
 }
 
-.search-suggestions a::before {
-    content: "\F138";
+.search-suggestions li.akce a::before {
+    content: "\F138"; /* třeba šipka */
+    font-family: "bootstrap-icons";
+    color: #6c757d;
+}
+
+.search-suggestions li.clanek a::before {
+    content: "\F3C8"; /* ikona článku */
     font-family: "bootstrap-icons";
     color: #6c757d;
 }

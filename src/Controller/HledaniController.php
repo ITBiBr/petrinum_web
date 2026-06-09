@@ -38,21 +38,24 @@ final class HledaniController extends AbstractController
 
         $results = [];
 
-        foreach ($akceRepository->search($term) as $akce) {
-            $results[] = [
-                'type' => 'akce',
-                'title' => $akce->getTitulek(),
-                'url' => '/akce/' . $akce->getUrl(),
-            ];
-        }
-
         foreach ($clankyRepository->search($term) as $clanek) {
             $results[] = [
                 'type' => 'clanek',
                 'title' => $clanek->getTitulek(),
                 'url' => '/clanky/' . $clanek->getUrl(),
+                'date' => '',
             ];
         }
+        foreach ($akceRepository->search($term) as $akce) {
+            $results[] = [
+                'type' => 'akce',
+                'title' => $akce->getTitulek(),
+                'url' => '/akce/' . $akce->getUrl(),
+                'date' => $akce->getDatum()->format('j.n.Y')
+            ];
+        }
+
+
 
         return $this->json($results);
     }
